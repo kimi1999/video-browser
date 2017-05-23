@@ -13,13 +13,13 @@ module.exports = {
   //   video_list: './src/video_list.js',
   //   video_detail: './src/video_detail.js'
   // },
-  // output: {
-  //   path: config.build.assetsRoot,
-  //   filename: '[name].js',
-  //   publicPath: process.env.NODE_ENV === 'production'
-  //     ? config.build.assetsPublicPath
-  //     : config.dev.assetsPublicPath
-  // },
+  output: {
+    path: config.build.assetsRoot,
+    filename: '[name].js',
+    publicPath: process.env.NODE_ENV === 'production'
+      ? config.build.assetsPublicPath
+      : config.dev.assetsPublicPath
+  },
   resolve: {
     extensions: ['.js', '.vue', '.json'],
     alias: {

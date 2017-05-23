@@ -12,14 +12,6 @@ baseWebpackConfig.entry = {
     video_list: './src/video_list.js',
     video_detail: './src/video_detail.js'
 }
-baseWebpackConfig.output = {
-  path: config.build.assetsRoot,
-  publicPath: process.env.NODE_ENV === 'production' ? config.build.assetsPublicPath : config.dev.assetsPublicPath,
-  filename: '[name].js'
-}
-
-
-
 
 // add hot-reload related code to entry chunks
 Object.keys(baseWebpackConfig.entry).forEach(function (name) {
