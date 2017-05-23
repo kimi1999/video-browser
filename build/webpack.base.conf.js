@@ -8,16 +8,18 @@ function resolve (dir) {
 }
 
 module.exports = {
-  entry: {
-    app: './src/main.js'
-  },
-  output: {
-    path: config.build.assetsRoot,
-    filename: '[name].js',
-    publicPath: process.env.NODE_ENV === 'production'
-      ? config.build.assetsPublicPath
-      : config.dev.assetsPublicPath
-  },
+  // entry: {
+  //   app: './src/app.js',
+  //   video_list: './src/video_list.js',
+  //   video_detail: './src/video_detail.js'
+  // },
+  // output: {
+  //   path: config.build.assetsRoot,
+  //   filename: '[name].js',
+  //   publicPath: process.env.NODE_ENV === 'production'
+  //     ? config.build.assetsPublicPath
+  //     : config.dev.assetsPublicPath
+  // },
   resolve: {
     extensions: ['.js', '.vue', '.json'],
     alias: {
