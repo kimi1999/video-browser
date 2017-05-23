@@ -13,7 +13,7 @@ var env = config.build.env
 
 var webpackConfig = merge(baseWebpackConfig, {
   entry:{
-    index: ['./src/app.js']
+    video_list: ['./src/video_list.js']
   },
   module: {
     rules: utils.styleLoaders({
@@ -53,9 +53,9 @@ var webpackConfig = merge(baseWebpackConfig, {
     // you can customize output by editing /index.html
     // see https://github.com/ampedandwired/html-webpack-plugin
     new HtmlWebpackPlugin({
-      filename: config.build.index,
-      template: 'pages/index.html',
-      chunks: ["index", 'manifest', 'vendor'],
+      filename: config.build.video_list,
+      template: 'pages/video_list.html',
+      chunks: ["video_list", 'manifest_video_list', 'vendor_video_list'],
       inject: true,
       minify: {
         removeComments: true,
@@ -69,7 +69,7 @@ var webpackConfig = merge(baseWebpackConfig, {
     }),
     // split vendor js into its own file
     new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor',
+      name: 'vendor_video_list',
       minChunks: function (module, count) {
         // any required modules inside node_modules are extracted to vendor
         return (
@@ -84,8 +84,8 @@ var webpackConfig = merge(baseWebpackConfig, {
     // extract webpack runtime and module manifest to its own file in order to
     // prevent vendor hash from being updated whenever app bundle is updated
     new webpack.optimize.CommonsChunkPlugin({
-      name: 'manifest',
-      chunks: ['vendor']
+      name: 'manifest_video_list',
+      chunks: ['vendor_video_list']
     }),
     // copy custom static assets
     new CopyWebpackPlugin([
