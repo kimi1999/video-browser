@@ -35,6 +35,11 @@
         }
       }
     },
+    watch:{
+      "videoListParams.classify": function(){
+        this.getVideoList(1);
+      }
+    },
     mounted(){
       const self = this;
       Config.F.initTouchLoading({
@@ -66,6 +71,12 @@
           }
         }
       });
+    },
+    methods:{
+      //获取视频列表
+      getVideoList(page){
+
+      }
     },
     components:{
       VideoItem,LoadingCenter

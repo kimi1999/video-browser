@@ -25,7 +25,6 @@ const F = {
    }
    */
   initTouchLoading: function(obj){
-    console.log("9999999999");
     /* 给页面添加touch事件 */
     var startY = 0, //滑动开始时的y坐标
       endY = 0,//滑动结束时的y坐标

@@ -2,14 +2,11 @@
   <div class="box ui-border-b">
     <div class="main">
       <i></i>
-      <div class="tab-list">
+      <div class="tab-list" id="scrollTab">
         <p>
-          <span class="on">Hot</span>
-          <span>News</span>
-          <span>Music</span>
-          <span>Movie</span>
-          <span>Football</span>
-          <span>Sport</span>
+          <span v-for="tab in tabs.list" @click="checkTab(tab)" :key="tab.id"  :class="{on:tab.id==tabs.recent}">
+            {{tab.name}}
+          </span>
         </p>
       </div>
     </div>
@@ -34,7 +31,7 @@
       padding: 0 12px 0 42px;
       line-height: 44px;
       box-sizing: border-box;
-      overflow: hidden;
+      //overflow: hidden;
       i{
         position: absolute;
         left: 12px;
@@ -66,16 +63,33 @@
     }
   }
 </style>
+<style>
+  .ps-container > .ps-scrollbar-x-rail > .ps-scrollbar-x{
+    background-color: #fff!important;
+  }
+  .ps:hover > .ps__scrollbar-x-rail, .ps:hover > .ps__scrollbar-y-rail{
+    opacity: 0!important;
+  }
+</style>
 <script lang="babel">
-    export default{
-      data(){
-          return{}
-      },
-      mounted(){
-
-      },
-      methods:{
-
+  import $ from "jquery"
+  require('perfect-scrollbar/dist/css/perfect-scrollbar.css')
+  import Ps from 'perfect-scrollbar'
+  export default{
+    props:["tabs"],
+    data(){
+        return{}
+    },
+    mounted(){
+      Ps.initialize(document.getElementById("scrollTab"));//初始化 滚动分类
+    },
+    methods:{
+      checkTab(tab){
+        $(".ps-container.ps-active-x  .ps-scrollbar-x-rail").css({
+          "opacity":0
+        });
+        this.$emit("changTab",tab)
       }
     }
+  }
 </script>
