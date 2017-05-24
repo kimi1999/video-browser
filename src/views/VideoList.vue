@@ -1,7 +1,10 @@
 <template>
   <div class="list-main">
     <SlideTabs></SlideTabs>
-    <ListMain v-if="videoListParams.show" :video-list-params="videoListParams" ></ListMain>
+    <div class="dur-loading" v-if="!videoListParams.show" :style="{height:videoListParams.minHeight}">
+      <LoadingCenter loading-width="40px" loading-color="#7b007b" loading-type="dots"></LoadingCenter>
+    </div>
+    <ListMain v-else="videoListParams.show" :video-list-params="videoListParams" ></ListMain>
   </div>
 </template>
 
@@ -11,6 +14,10 @@
   @import "../assets/css/public.less";
   .list-main{
     padding-top: 45px;
+  }
+  .dur-loading{
+    width: 100%;
+
   }
 
 </style>
@@ -24,7 +31,9 @@
       return {
         videoListParams:{
           classify: "Hot",//视频分类
-          minHeight:"100%",
+          minHeight:"100%",//视频列表区域最小高度
+          canLoadingRecent: true,//是否允许下滑加载最新数据
+          canLoadingMore: true,//是否允许上滑加载更多数据
           show:true
         }
       }
@@ -36,12 +45,11 @@
       //设置 视频列表 块儿的最小高度
       setVideoListHeight(){
         const windowHeight = document.documentElement.clientHeight;
-        console.log(windowHeight);
         this.$set(this.videoListParams,"minHeight",(windowHeight-45)+"px")
       }
     },
     components:{
-      SlideTabs,ListMain
+      SlideTabs,LoadingCenter,ListMain
     }
   }
 </script>

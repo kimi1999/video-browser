@@ -2,6 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="22a82178-f525-486f-ba3f-08c5e35b6800" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/assets/js/config.js" afterPath="$PROJECT_DIR$/src/assets/js/config.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/GridBox.vue" afterPath="$PROJECT_DIR$/src/components/GridBox.vue" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/ListMain.vue" afterPath="$PROJECT_DIR$/src/components/ListMain.vue" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/VideoItem.vue" afterPath="$PROJECT_DIR$/src/components/VideoItem.vue" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/VideoList.vue" afterPath="$PROJECT_DIR$/src/views/VideoList.vue" />
     </list>
     <ignored path="video-browser.iws" />
@@ -25,90 +29,27 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="VideoList.vue" pinned="false" current-in-tab="true">
+      <file leaf-file-name="VideoList.vue" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/views/VideoList.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="243">
-              <caret line="9" column="36" selection-start-line="9" selection-start-column="36" selection-end-line="9" selection-end-column="36" />
+            <state relative-caret-position="670">
+              <caret line="39" column="6" selection-start-line="39" selection-start-column="6" selection-end-line="39" selection-end-column="6" />
               <folding>
-                <element signature="e#388#439#0" expanded="true" />
+                <element signature="e#645#696#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ListMain.vue" pinned="false" current-in-tab="false">
+      <file leaf-file-name="ListMain.vue" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/components/ListMain.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="27">
-              <caret line="1" column="63" selection-start-line="1" selection-start-column="63" selection-end-line="1" selection-end-column="63" />
-              <folding>
-                <element signature="e#627#662#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="public.less" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/assets/css/public.less">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="5" column="17" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="VideoItem.vue" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/VideoItem.vue">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="81">
-              <caret line="3" column="34" selection-start-line="3" selection-start-column="34" selection-end-line="4" selection-end-column="106" />
+            <state relative-caret-position="238">
+              <caret line="69" column="16" selection-start-line="69" selection-start-column="16" selection-end-line="69" selection-end-column="16" />
               <folding>
                 <element signature="n#style#0;n#!!top" expanded="false" />
-                <element signature="e#1118#1220#0" expanded="false" />
-                <element signature="e#1230#1644#0" expanded="false" />
-                <element signature="e#1678#1718#0" expanded="true" />
+                <element signature="e#771#811#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="LoadingAnimate.vue" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/LoadingAnimate.vue">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="8">
-              <caret line="112" column="43" selection-start-line="112" selection-start-column="39" selection-end-line="112" selection-end-column="43" />
-              <folding>
-                <element signature="n#template#0;n#div#0;n#template#0;n#!!top" expanded="false" />
-                <element signature="n#template#1;n#div#0;n#template#0;n#!!top" expanded="false" />
-                <element signature="n#template#2;n#div#0;n#template#0;n#!!top" expanded="false" />
-                <element signature="n#template#3;n#div#0;n#template#0;n#!!top" expanded="false" />
-                <element signature="n#template#4;n#div#0;n#template#0;n#!!top" expanded="false" />
-                <element signature="n#style#0;n#!!top" expanded="false" />
-                <element signature="e#8914#8987#0" expanded="false" />
-                <element signature="e#8991#9244#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="LoadingCenter.vue" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/LoadingCenter.vue">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="54">
-              <caret line="2" column="106" selection-start-line="2" selection-start-column="106" selection-end-line="2" selection-end-column="106" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="reset.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/assets/css/reset.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="54">
-              <caret line="94" column="1" selection-start-line="94" selection-start-column="1" selection-end-line="94" selection-end-column="9" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -116,20 +57,20 @@
       <file leaf-file-name="config.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/assets/js/config.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="162">
-              <caret line="19" column="3" selection-start-line="19" selection-start-column="3" selection-end-line="19" selection-end-column="3" />
+            <state relative-caret-position="243">
+              <caret line="34" column="36" selection-start-line="34" selection-start-column="36" selection-end-line="34" selection-end-column="36" />
               <folding>
-                <element signature="e#51#397#0" expanded="false" />
+                <element signature="e#135#481#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="vars.less" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/assets/css/vars.less">
+      <file leaf-file-name="GridBox.vue" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/components/GridBox.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="378">
+              <caret line="44" column="7" selection-start-line="44" selection-start-column="7" selection-end-line="44" selection-end-column="7" />
               <folding />
             </state>
           </provider>
@@ -164,14 +105,15 @@
         <option value="$PROJECT_DIR$/src/video_list.js" />
         <option value="$PROJECT_DIR$/src/components/GridItem.vue" />
         <option value="$PROJECT_DIR$/src/components/SlideTabs.vue" />
-        <option value="$PROJECT_DIR$/src/components/GridBox.vue" />
         <option value="$PROJECT_DIR$/src/assets/config.js" />
         <option value="$PROJECT_DIR$/src/components/LoadingAnimate.vue" />
         <option value="$PROJECT_DIR$/src/components/LoadingCenter.vue" />
-        <option value="$PROJECT_DIR$/src/components/VideoItem.vue" />
         <option value="$PROJECT_DIR$/src/assets/css/public.less" />
-        <option value="$PROJECT_DIR$/src/components/ListMain.vue" />
         <option value="$PROJECT_DIR$/src/views/VideoList.vue" />
+        <option value="$PROJECT_DIR$/src/components/VideoItem.vue" />
+        <option value="$PROJECT_DIR$/src/components/GridBox.vue" />
+        <option value="$PROJECT_DIR$/src/assets/js/config.js" />
+        <option value="$PROJECT_DIR$/src/components/ListMain.vue" />
       </list>
     </option>
   </component>
@@ -323,10 +265,6 @@
               <option name="myItemId" value="assets" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="css" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
@@ -422,12 +360,12 @@
       <workItem from="1495506479925" duration="7047000" />
       <workItem from="1495514695552" duration="3723000" />
       <workItem from="1495521816850" duration="16340000" />
-      <workItem from="1495591055714" duration="8369000" />
+      <workItem from="1495591055714" duration="13384000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="35479000" />
+    <option name="totallyTimeSpent" value="40494000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -475,7 +413,7 @@
         <state relative-caret-position="459">
           <caret line="17" column="21" selection-start-line="17" selection-start-column="21" selection-end-line="17" selection-end-column="21" />
           <folding>
-            <element signature="e#388#439#0" expanded="true" />
+            <element signature="e#645#696#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -506,7 +444,7 @@
         <state relative-caret-position="513">
           <caret line="19" column="3" selection-start-line="19" selection-start-column="3" selection-end-line="19" selection-end-column="3" />
           <folding>
-            <element signature="e#51#397#0" expanded="false" />
+            <element signature="e#135#481#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -714,23 +652,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/GridBox.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="54">
-          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/assets/js/config.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="19" column="3" selection-start-line="19" selection-start-column="3" selection-end-line="19" selection-end-column="3" />
-          <folding>
-            <element signature="e#51#397#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/assets/css/reset.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="54">
@@ -743,14 +664,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="54">
           <caret line="2" column="106" selection-start-line="2" selection-start-column="106" selection-end-line="2" selection-end-column="106" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/assets/css/public.less">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="5" column="17" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
           <folding />
         </state>
       </provider>
@@ -772,10 +685,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/assets/css/public.less">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="108">
+          <caret line="4" column="14" selection-start-line="4" selection-start-column="14" selection-end-line="4" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/VideoItem.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="81">
-          <caret line="3" column="34" selection-start-line="3" selection-start-column="34" selection-end-line="4" selection-end-column="106" />
+        <state relative-caret-position="378">
+          <caret line="102" column="52" selection-start-line="102" selection-start-column="52" selection-end-line="102" selection-end-column="52" />
           <folding>
             <element signature="n#style#0;n#!!top" expanded="false" />
             <element signature="e#1118#1220#0" expanded="false" />
@@ -785,22 +706,41 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/ListMain.vue">
+    <entry file="file://$PROJECT_DIR$/src/components/GridBox.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="27">
-          <caret line="1" column="63" selection-start-line="1" selection-start-column="63" selection-end-line="1" selection-end-column="63" />
-          <folding>
-            <element signature="e#627#662#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="378">
+          <caret line="44" column="7" selection-start-line="44" selection-start-column="7" selection-end-line="44" selection-end-column="7" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/views/VideoList.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="243">
-          <caret line="9" column="36" selection-start-line="9" selection-start-column="36" selection-end-line="9" selection-end-column="36" />
+        <state relative-caret-position="670">
+          <caret line="39" column="6" selection-start-line="39" selection-start-column="6" selection-end-line="39" selection-end-column="6" />
           <folding>
-            <element signature="e#388#439#0" expanded="true" />
+            <element signature="e#645#696#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/assets/js/config.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="243">
+          <caret line="34" column="36" selection-start-line="34" selection-start-column="36" selection-end-line="34" selection-end-column="36" />
+          <folding>
+            <element signature="e#135#481#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/ListMain.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="69" column="16" selection-start-line="69" selection-start-column="16" selection-end-line="69" selection-end-column="16" />
+          <folding>
+            <element signature="n#style#0;n#!!top" expanded="false" />
+            <element signature="e#771#811#0" expanded="true" />
           </folding>
         </state>
       </provider>

@@ -101,7 +101,6 @@
     methods:{
       resetVideoBoxHeight(){
         const coverWidth = $(".video-item").width();
-        console.log((coverWidth*this.videoBox.height/this.videoBox.width));
         this.$set(this.videoBox,"relHeight",(coverWidth*this.videoBox.height/this.videoBox.width)+"px")
       }
     },

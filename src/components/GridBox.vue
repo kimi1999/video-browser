@@ -43,7 +43,6 @@
         let gridItemHtml = createElement('div',settings,createItem(i));
         vNode.push(gridItemHtml);
       }
-      console.log(vNode);
       var myHtml = createElement('div',{},vNode);
       return myHtml;
     }
