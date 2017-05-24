@@ -1,42 +1,47 @@
 <template>
   <div class="list-main">
     <SlideTabs></SlideTabs>
-    <div class="video-list-cont">
-      <GridBox :columnNum="2" columnSpace="12px">
-        <VideoItem  v-for="i in 5"></VideoItem>
-      </GridBox>
-    </div>
+    <ListMain v-if="videoListParams.show" :video-list-params="videoListParams" ></ListMain>
   </div>
 </template>
 
 <style lang="less">
   @import "../assets/css/reset.css";
   @import "../assets/css/vars.less";
+  @import "../assets/css/public.less";
   .list-main{
     padding-top: 45px;
-    .video-list-cont{
-      padding: 0 12px;
-    }
   }
 
 </style>
 
 <script lang="babel">
   import SlideTabs from '../components/SlideTabs.vue'
-  import GridBox from '../components/GridBox.vue'
-  import VideoItem from '../components/VideoItem.vue'
+  import LoadingCenter from '../components/LoadingCenter.vue'
+  import ListMain from '../components/ListMain.vue'
   export default{
     data(){
-      return {}
+      return {
+        videoListParams:{
+          classify: "Hot",//视频分类
+          minHeight:"100%",
+          show:true
+        }
+      }
     },
     mounted(){
-
+      this.setVideoListHeight();
     },
     methods:{
-
+      //设置 视频列表 块儿的最小高度
+      setVideoListHeight(){
+        const windowHeight = document.documentElement.clientHeight;
+        console.log(windowHeight);
+        this.$set(this.videoListParams,"minHeight",(windowHeight-45)+"px")
+      }
     },
     components:{
-      SlideTabs,VideoItem
+      SlideTabs,ListMain
     }
   }
 </script>
