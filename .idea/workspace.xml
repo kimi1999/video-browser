@@ -2,14 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="22a82178-f525-486f-ba3f-08c5e35b6800" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/assets/images/video-logo.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/assets/css/public.less" afterPath="$PROJECT_DIR$/src/assets/css/public.less" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/LoadingCenter.vue" afterPath="$PROJECT_DIR$/src/components/LoadingCenter.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/SlideTabs.vue" afterPath="$PROJECT_DIR$/src/components/SlideTabs.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/VideoItem.vue" afterPath="$PROJECT_DIR$/src/components/VideoItem.vue" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/VideoPlayer.vue" afterPath="$PROJECT_DIR$/src/components/VideoPlayer.vue" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/VideoDetail.vue" afterPath="$PROJECT_DIR$/src/views/VideoDetail.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/VideoList.vue" afterPath="$PROJECT_DIR$/src/views/VideoList.vue" />
     </list>
     <ignored path="video-browser.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -48,8 +42,8 @@
       <file leaf-file-name="VideoDetail.vue" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/views/VideoDetail.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1296">
-              <caret line="48" column="39" selection-start-line="48" selection-start-column="39" selection-end-line="48" selection-end-column="39" />
+            <state relative-caret-position="162">
+              <caret line="30" column="25" selection-start-line="30" selection-start-column="25" selection-end-line="30" selection-end-column="25" />
               <folding>
                 <element signature="e#577#632#0" expanded="true" />
               </folding>
@@ -70,9 +64,11 @@
       <file leaf-file-name="VideoPlayer.vue" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/components/VideoPlayer.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="297">
-              <caret line="35" column="27" selection-start-line="35" selection-start-column="22" selection-end-line="35" selection-end-column="27" />
-              <folding />
+            <state relative-caret-position="238">
+              <caret line="96" column="8" selection-start-line="96" selection-start-column="8" selection-end-line="96" selection-end-column="8" />
+              <folding>
+                <element signature="e#514#721#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -190,8 +186,8 @@
         <option value="$PROJECT_DIR$/src/components/VideoItem.vue" />
         <option value="$PROJECT_DIR$/src/components/PartingLine.vue" />
         <option value="$PROJECT_DIR$/src/components/VideoInfo.vue" />
-        <option value="$PROJECT_DIR$/src/views/VideoDetail.vue" />
         <option value="$PROJECT_DIR$/src/components/LoadingCenter.vue" />
+        <option value="$PROJECT_DIR$/src/views/VideoDetail.vue" />
         <option value="$PROJECT_DIR$/src/components/VideoPlayer.vue" />
       </list>
     </option>
@@ -503,12 +499,12 @@
       <workItem from="1495514695552" duration="3723000" />
       <workItem from="1495521816850" duration="16340000" />
       <workItem from="1495591055714" duration="19224000" />
-      <workItem from="1495676123377" duration="8389000" />
+      <workItem from="1495676123377" duration="10040000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="54723000" />
+    <option name="totallyTimeSpent" value="56374000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -930,16 +926,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/VideoDetail.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1296">
-          <caret line="48" column="39" selection-start-line="48" selection-start-column="39" selection-end-line="48" selection-end-column="39" />
-          <folding>
-            <element signature="e#577#632#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/LoadingCenter.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="189">
@@ -948,11 +934,23 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/VideoDetail.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="30" column="25" selection-start-line="30" selection-start-column="25" selection-end-line="30" selection-end-column="25" />
+          <folding>
+            <element signature="e#577#632#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/VideoPlayer.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="297">
-          <caret line="35" column="27" selection-start-line="35" selection-start-column="22" selection-end-line="35" selection-end-column="27" />
-          <folding />
+        <state relative-caret-position="238">
+          <caret line="96" column="8" selection-start-line="96" selection-start-column="8" selection-end-line="96" selection-end-column="8" />
+          <folding>
+            <element signature="e#514#721#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
