@@ -71,7 +71,7 @@
         this.tabs.recent = tab.id;
         this.tabs.recent = tab.id;
         this.videoListParams.classify = tab.id;
-        this.videoListParams.show = false;
+        //this.videoListParams.show = false;
       }
     },
     components:{

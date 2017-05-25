@@ -10,7 +10,7 @@
         Praesent commodo cursus…
       </div>
       <div class="source">
-        <i class="play-icon"></i>
+        <i class="play-icon iconfont icon-bofangshuicon"></i>
         <span class="from">Youtube</span>
       </div>
     </div>
@@ -65,12 +65,13 @@
     color: rgba(68,68,68,.5);
     .play-icon{
       position: absolute;
-      top: 0;
+      top: 1px;
       left: 0;
       display: inline-block;
+      font-size: 12px;
       width: 12px;
       height: 12px;
-      background-color: #7b007b;
+      //background-color: #7b007b;
     }
     .from{
       display: inline-block;

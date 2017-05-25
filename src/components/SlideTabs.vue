@@ -39,7 +39,9 @@
         width: 18px;
         height: 18px;
         display: inline-block;
-        background-color: #7b007b;
+        //background-color: #7b007b;
+        background: url("../assets/images/video-logo.png") center center no-repeat;
+        background-size: 18px 18px;
       }
     }
     .tab-list{
