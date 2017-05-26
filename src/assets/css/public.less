@@ -4,6 +4,21 @@
   height: 35px;
 }
 .loading-more{
-  position: absolute;
-  bottom: 0;
+  //position: absolute;
+  //bottom: 0;
+}
+
+
+
+/* ********* VUE 过渡效果 ********** */
+.slide-fade-enter-active {
+  transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.slide-fade-leave-active {
+  transition: all .3s ease;
+}
+.slide-fade-enter, .slide-fade-leave-to
+  /* .slide-fade-leave-active for <2.1.8 */ {
+  transform: translateY(15px);
+  opacity: 0;
 }

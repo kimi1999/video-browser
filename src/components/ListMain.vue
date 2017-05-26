@@ -1,16 +1,20 @@
 <template>
   <div id="listWrapper" class="video-list-wrapper" :style="{minHeight:videoListParams.minHeight}">
-    <div class="loading-recent" v-if="videoListParams.canLoadingRecent&&tools.loadingRecent">
-      <LoadingCenter loading-width="25px" loading-color="#444"></LoadingCenter>
-    </div>
+    <transition  name="slide-fade">
+      <div class="loading-recent" v-if="videoListParams.canLoadingRecent&&tools.loadingRecent">
+        <LoadingCenter loading-width="25px" loading-color="#444"></LoadingCenter>
+      </div>
+    </transition >
     <div class="video-list-cont">
       <GridBox :columnNum="2" columnSpace="12px">
         <VideoItem  v-for="video in videoList" :key="video.id" :video-data="video"></VideoItem>
       </GridBox>
     </div>
-    <div class="loading-more" v-if="videoListParams.canLoadingMore&&tools.loadingMore">
-      <LoadingCenter loading-width="25px" loading-color="#444"></LoadingCenter>
-    </div>
+    <transition  name="slide-fade">
+      <div class="loading-more" v-if="videoListParams.canLoadingMore&&tools.loadingMore">
+        <LoadingCenter loading-width="25px" loading-color="#444"></LoadingCenter>
+      </div>
+    </transition>
   </div>
 </template>
 

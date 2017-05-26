@@ -129,6 +129,43 @@ const F = {
     }
 
   },
+  /* 数组去重
+     bigArr: 最终去除重复 的目标数组  Array 必须
+     smallArr: 将要加入bigArr的小数组 Array 必须
+     keyword:  根据数组中每个元素的  keyword属性 去除重复 String 必须
+     type:  smallArr 插入 bigArr的方式 可选值"push" "unshift" 默认"push"   可选
+   * */
+  deleteRepeatItems: function(bigArr,smallArr,keyword,type){
+    var insertType = type || "push";
+    if(insertType=="push"){
+      for(var i=0; i<smallArr.length; i++){
+        var inArr = false;
+        for(var j=0; j<bigArr.length; j++){
+          if(smallArr[i][keyword] == bigArr[j][keyword]){
+            inArr = true;
+            break;
+          }
+        }
+        if(!inArr){
+          bigArr.push(smallArr[i]);
+        }
+      }
+    }
+    else if(type=="unshift"){
+      for(var i= smallArr.length-1; i>0; i--){
+        var inArr = false;
+        for(var j=bigArr.length-1; j>0; j--){
+          if(smallArr[i][keyword] == bigArr[j][keyword]){
+            inArr = true;
+            break;
+          }
+        }
+        if(!inArr){
+          bigArr.unshift(smallArr[i]);
+        }
+      }
+    }
+  }
 }
 
 let URI = {
