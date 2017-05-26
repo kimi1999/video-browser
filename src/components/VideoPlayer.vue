@@ -15,6 +15,7 @@
     position: fixed;
     left: 0;
     top: 0;
+    z-index: 300;
     background-color: #000;
     .cover-cont {
       position: relative;

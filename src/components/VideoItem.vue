@@ -1,17 +1,17 @@
 <template>
-    <div class="video-item">
-      <div class="cover" :style="{'height':videoBox.relHeight}">
-        <div class="loading-cont">
+    <div class="video-item" @click="toDetailPage">
+      <div class="cover" :style="{'height':videoBox.relHeight,'backgroundImage':'url('+videoBox.bg+')'}">
+        <div class="loading-cont" v-if="!videoBox.bg">
           <LoadingCenter loading-width="25px" loading-color="#7b007b" loading-type="dots"></LoadingCenter>
         </div>
-        <span class="time">04:56</span>
+        <span class="time">{{videoData.time}}</span>
       </div>
       <div class="disc ellipsis-1">
-        Praesent commodo cursus…
+        {{videoData.title}}
       </div>
       <div class="source">
         <i class="play-icon iconfont icon-bofangshuicon"></i>
-        <span class="from">Youtube</span>
+        <span class="from">{{videoData.source}}</span>
       </div>
     </div>
 </template>
@@ -83,12 +83,14 @@
   import $ from 'jquery'
   import LoadingCenter from './LoadingCenter.vue'
   export default{
+    props:["video-data"],
     data(){
         return{
           videoBox:{
             width:162,
             height:90,
-            relHeight:"80px"
+            relHeight:"80px",
+            bg:null
           }
         }
     },
@@ -97,12 +99,26 @@
       this.resetVideoBoxHeight();
       Config.F.addEvent(window,"resize",function(){
         self.resetVideoBoxHeight();
-      })
+      });
+      this.loadingImg();
     },
     methods:{
       resetVideoBoxHeight(){
         const coverWidth = $(".video-item").width();
         this.$set(this.videoBox,"relHeight",(coverWidth*this.videoBox.height/this.videoBox.width)+"px")
+      },
+      toDetailPage(){
+        window.open(Config.URI.toDetailPage);
+      },
+      loadingImg(){
+        const self = this;
+        if(this.videoData.cover){
+          let img = new Image();
+          img.src = this.videoData.cover;
+          img.onload = function(){
+            self.videoBox.bg = img.src;
+          }
+        }
       }
     },
     components:{

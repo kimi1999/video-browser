@@ -1,4 +1,9 @@
 
+const env= {
+  dev: true,
+  test: false,
+  product: false
+}
 const F = {
   /* 原生js 给elm（Object 原生Dom 或window） 添加 evType（多个事件空格 隔开 String）fn（Function事件回调） */
   addEvent: function (elm, evType, fn){
@@ -126,6 +131,24 @@ const F = {
   },
 }
 
+let URI = {
+  toDetailPage:"/video_detail.html",//跳转到视频详情页的地址
+  base:"http://test.feed.mynewshunter.com",// 后台接口 base路径
+  getVideoClassify: "",//获取视频分类
+  getVideoList:"/video/list",//获取视频列表
+  getOneVideoInfo: ""// 获取某一个视频的详细信息
+}
+//测试环境
+if(env.test){
+  URI.base="";
+  URI.toDetailPage = "";
+}
+//线上环境
+if(env.product){
+  URI.base="";
+  URI.toDetailPage = "";
+}
+
 export default {
-  F
+  env,F,URI
 }

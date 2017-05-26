@@ -5,7 +5,7 @@
     </div>
     <div class="video-list-cont">
       <GridBox :columnNum="2" columnSpace="12px">
-        <VideoItem  v-for="i in 5" :key="i"></VideoItem>
+        <VideoItem  v-for="video in videoList" :key="video.id" :video-data="video"></VideoItem>
       </GridBox>
     </div>
     <div class="loading-more" v-if="videoListParams.canLoadingMore&&tools.loadingMore">
@@ -22,6 +22,7 @@
 
 <script lang="babel">
   import Config from '../assets/js/config'
+  import testData from '../assets/js/testData'
   import GridBox from './GridBox.vue'
   import VideoItem from './VideoItem.vue'
   import LoadingCenter from './LoadingCenter.vue'
@@ -31,17 +32,21 @@
       return {
         tools:{
           loadingRecent: false,
-          loadingMore: false
-        }
+          loadingRecentSuccess: true,
+          loadingMore: false,
+          loadingMoreSuccess: true
+        },
+        videoList: Config.env.dev ? testData.videoList:[]
       }
     },
     watch:{
       "videoListParams.classify": function(){
-        this.getVideoList(1);
+        this.getVideoList("recent",true);
       }
     },
     mounted(){
       const self = this;
+      //初始化 滑动加载最新 和 滑动加载更多
       Config.F.initTouchLoading({
         elm: document.getElementById("listWrapper"),
         onTouchStart: function(loadingType){
@@ -54,28 +59,44 @@
         },
         loadingRecent: function(){
           if(self.videoListParams.canLoadingRecent && !self.tools.loadingRecent){
-            console.log("loading recent");
-
+            //console.log("loading recent");
+            self.tools.loadingRecentSuccess = false;
+            self.getVideoList("recent");
             setTimeout(function(){
-              self.tools.loadingRecent = false;
-            },3000)
+              if(!self.tools.loadingRecentSuccess){
+                self.tools.loadingRecent = false;
+              }
+            },10000)
           }
         },
         loadingMore: function(){
           if(self.videoListParams.canLoadingMore && !self.tools.loadingMore){
-            console.log("loading more");
-
+            //console.log("loading more");
+            self.tools.loadingMoreSuccess = false;
+            self.getVideoList("more");
             setTimeout(function(){
-              self.tools.loadingMore = false;
-            },3000)
+              if(!self.tools.loadingMoreSuccess){
+                self.tools.loadingMore = false;
+              }
+            },10000)
           }
         }
       });
     },
     methods:{
       //获取视频列表
-      getVideoList(page){
-
+      getVideoList(type,changeClassify){
+        let ajaxUrl = Config.URI.base + Config.URI.getVideoList;
+        ajaxUrl += "?lang=en";
+        if(type=="more"){
+          ajaxUrl += "&load=1";
+        }
+        else{
+          ajaxUrl += "&load=0";
+        }
+        this.$http.get(ajaxUrl).then(({data})=>{
+          console.log(data);
+        });
       }
     },
     components:{
