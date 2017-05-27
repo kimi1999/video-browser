@@ -5,7 +5,7 @@
       <div class="tab-list" id="scrollTab">
         <p>
           <span v-for="tab in tabs.list" @click="checkTab(tab)" :key="tab.id"  :class="{on:tab.id==tabs.recent}">
-            {{tab.name}}
+            {{tab.text}}
           </span>
         </p>
       </div>

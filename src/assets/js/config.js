@@ -3,6 +3,7 @@ const env= {
   dev: true,
   test: false,
   product: false,
+  lang:"en",
   inApusBrowser: window.WebstoreInterface
 }
 

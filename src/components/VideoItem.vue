@@ -1,18 +1,20 @@
 <template>
     <div class="video-item" @click="toDetailPage">
-      <div class="cover" :style="{'height':videoBox.relHeight,'backgroundImage':'url('+videoBox.bg+')'}">
-        <div class="loading-cont" v-if="!videoBox.bg">
-          <LoadingCenter loading-width="25px" loading-color="#7b007b" loading-type="dots"></LoadingCenter>
+      <template v-if="videoBox.relHeight">
+        <div class="cover" :style="{'height':videoBox.relHeight,'backgroundImage':'url('+videoBox.bg+')'}">
+          <div class="loading-cont" v-if="!videoBox.bg">
+            <LoadingCenter loading-width="25px" loading-color="#7b007b" loading-type="dots"></LoadingCenter>
+          </div>
+          <span class="time">{{videoData.time}}</span>
         </div>
-        <span class="time">{{videoData.time}}</span>
-      </div>
-      <div class="disc ellipsis-1">
-        {{videoData.title}}
-      </div>
-      <div class="source">
-        <i class="play-icon iconfont icon-bofangshuicon"></i>
-        <span class="from">{{videoData.source}}</span>
-      </div>
+        <div class="disc ellipsis-1">
+          {{videoData.title}}
+        </div>
+        <div class="source">
+          <i class="play-icon iconfont icon-bofangshuicon"></i>
+          <span class="from">{{videoData.source}}</span>
+        </div>
+      </template>
     </div>
 </template>
 <style lang="less" scoped>
@@ -89,7 +91,7 @@
           videoBox:{
             width:162,
             height:90,
-            relHeight:"80px",
+            relHeight:"",
             bg:null
           }
         }
@@ -104,8 +106,14 @@
     },
     methods:{
       resetVideoBoxHeight(){
-        const coverWidth = $(".video-item").width();
-        this.$set(this.videoBox,"relHeight",(coverWidth*this.videoBox.height/this.videoBox.width)+"px")
+        const self = this;
+        const timer = setInterval(function(){
+          let coverWidth = $(".video-item").width();
+          if(coverWidth){
+            clearInterval(timer);
+            self.$set(self.videoBox,"relHeight",(coverWidth*self.videoBox.height/self.videoBox.width)+"px");
+          }
+        },100);
       },
       toDetailPage(){
         window.open(Config.URI.toDetailPage);

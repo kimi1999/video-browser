@@ -4,7 +4,7 @@
     <div class="dur-loading" v-if="!videoListParams.show" :style="{height:videoListParams.minHeight}">
       <LoadingCenter loading-width="40px" loading-color="#7b007b" loading-type="dots"></LoadingCenter>
     </div>
-    <ListMain v-show="videoListParams.show" :video-list-params="videoListParams"></ListMain>
+    <ListMain v-show="videoListParams.show" @getVideoListSuccess="videoListParams.show=true" :video-list-params="videoListParams"></ListMain>
   </div>
 </template>
 
@@ -35,7 +35,7 @@
           minHeight: "100%",//视频列表区域最小高度
           canLoadingRecent: true,//是否允许下滑加载最新数据
           canLoadingMore: true,//是否允许上滑加载更多数据
-          show: true
+          show: false
         },
         tabs: {
           list: [],
@@ -61,26 +61,36 @@
         let ajaxUrl = Config.URI.base + Config.URI.getVideoClassify;
         this.$http.post(ajaxUrl, {}).then(({data})=> {
           if(data.code==0){
-            console.log(data.data);
+            let lang = Config.env.lang;
+            let hasVideoChannels = [];
+            let perfectChannel = null;
+            if(data.data.channels){
+              for(var i=0; i<data.data.channels.length; i++){
+                const channel = data.data.channels[i]
+                if(channel.lang && channel.lang==lang){
+                  perfectChannel = channel;
+                }
+                if(channel.videocates[0]){
+                  hasVideoChannels.push(channel);
+                }
+              }
+              if(!perfectChannel && hasVideoChannels[0]){
+                perfectChannel = hasVideoChannels[0];
+              }
+              if(perfectChannel){
+                this.tabs.list = perfectChannel.videocates;
+                this.triggerChangTab(this.tabs.list[0]);
+              }
+            }
           }
         });
-        this.tabs.list = [
-          {id: "1001", name: "Hot"},
-          {id: "1002", name: "News"},
-          {id: "1003", name: "Football"},
-          {id: "1004", name: "Movie"},
-          {id: "1005", name: "Sport"},
-          {id: "1006", name: "Food"}
-        ];
-        this.triggerChangTab(this.tabs.list[0]);
-
       },
       //触发 视频分类切换
       triggerChangTab(tab){
         this.tabs.recent = tab.id;
         this.tabs.recent = tab.id;
         this.videoListParams.classify = tab.id;
-        //this.videoListParams.show = false;
+        this.videoListParams.show = false;
       }
     },
     components: {

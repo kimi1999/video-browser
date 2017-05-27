@@ -49,5 +49,13 @@ export default {
       source: "Youtube",
       time: "08:45"
     }
+  ],
+  tabList:[
+    {id: "1001", text: "Hot"},
+    {id: "1002", text: "News"},
+    {id: "1003", text: "Football"},
+    {id: "1004", text: "Movie"},
+    {id: "1005", text: "Sport"},
+    {id: "1006", text: "Food"}
   ]
 }
