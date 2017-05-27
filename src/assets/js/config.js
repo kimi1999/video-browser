@@ -165,7 +165,20 @@ const F = {
         }
       }
     }
+  },
+  /* 随机打乱数组 */
+  mixArray:function(myArr){
+    var aArr = myArr,
+      num = myArr.length;
+    for (var i = 0; i < num; i++) {
+      var iRand = parseInt(num * Math.random());
+      var temp = aArr[i];
+      aArr[i] = aArr[iRand];
+      aArr[iRand] = temp;
+    }
+    return aArr;
   }
+
 }
 
 let URI = {
