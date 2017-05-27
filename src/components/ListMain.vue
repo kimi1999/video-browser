@@ -91,14 +91,14 @@
       //获取视频列表
       getVideoList(type,changeClassify){
         let ajaxUrl = Config.URI.base + Config.URI.getVideoList;
-        ajaxUrl += "?lang=en";
-        if(type=="more"){
-          ajaxUrl += "&load=1";
-        }
-        else{
-          ajaxUrl += "&load=0";
-        }
-        this.$http.get(ajaxUrl).then(({data})=>{
+//        ajaxUrl += "?lang=en";
+//        if(type=="more"){
+//          ajaxUrl += "&load=1";
+//        }
+//        else{
+//          ajaxUrl += "&load=0";
+//        }
+        this.$http.post(ajaxUrl,{}).then(({data})=>{
           console.log(data);
         });
       }

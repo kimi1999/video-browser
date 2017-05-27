@@ -2,8 +2,11 @@
 const env= {
   dev: true,
   test: false,
-  product: false
+  product: false,
+  inApusBrowser: window.WebstoreInterface
 }
+
+
 const F = {
   /* 原生js 给elm（Object 原生Dom 或window） 添加 evType（多个事件空格 隔开 String）fn（Function事件回调） */
   addEvent: function (elm, evType, fn){
@@ -182,11 +185,19 @@ const F = {
 }
 
 let URI = {
+  clientInfo:"",
   toDetailPage:"/video_detail.html",//跳转到视频详情页的地址
   base:"http://test.feed.mynewshunter.com",// 后台接口 base路径
-  getVideoClassify: "",//获取视频分类
+  getVideoClassify: "/mercury/channel/list",//获取视频分类
   getVideoList:"/video/list",//获取视频列表
-  getOneVideoInfo: ""// 获取某一个视频的详细信息
+  getOneVideoInfo: "/video/get",// 获取某一个视频的详细信息
+  getRelatedVideos: "/video/recommend"// 获取某一个视频的详细信息
+}
+if(env.inApusBrowser){
+  URI.clientInfos = window.WebstoreInterface.getClientInfoForVideo();
+}
+else{
+  URI.clientInfos = "vXzAhti9wSg%2BbPTvk2YxhMwvw6jzPoIg6kIfk7OI%2BJiXQ5jXVs3xM8NkJcxUXtiKyg7FYU%2FWwdXRd2g7GrfbOQTV9BjtCyICPp11bMeHAWc%2Fw17wC5SV1eKZ4RKoPyqxPgHnfPTopaNGjdc7pLzIEyoP%2BA0pDkqf3T2hppbhjiD3LXAU0Etf3YCa%2FkD1J3P6s72KVpke4qeB%2F37JECAzkuoc0Cx0ke8JcQVzT%2BtEc6ftZ9KQqAKcJeFas%2FLPDeljZfKh08aihWlUkNoj7h0HAyJY3NsfmQLSpjjWPyHiSQ6POYJX73%2BBkTYmxiLrm3EMMt5wMEQECz%2BJ3lp4ugjkx7Rv9M3KkRRGBXimCmqnIo7Xn2oWsUxlGq9uHI9%2BfV%2FIzzZQ9SogLMHx5wFfSxVp%2BPb06fu0z%2BEfcu44E6pqJ2wHQ7OmYpMavM1PrMPnywjZMAOhbMwvVt5I4S7JRoDtpk3bF74c0GG%2FwfnXSO%2FV0IQNlcKDHp9ulk1r2o7ZpzwmX5TWnBYiTsu5BzBNcWV8GcfoDMMeZTmU1GoQF3p3I%2FBWeZ3qnVbXGxfvh9Wz91eZmVQc8B9HsdtA0k%2BFM6Ujpb4aplC2dj9E9iuikWHnqncpec7e3prY9Bfuk92e9s%2BqRrTbVe953EQ%3D";
 }
 //测试环境
 if(env.test){
