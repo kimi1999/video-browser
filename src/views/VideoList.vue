@@ -1,7 +1,7 @@
 <template>
   <div class="list-main">
     <SlideTabs :tabs="tabs" v-if="tabs.list[0]" @changTab="triggerChangTab"></SlideTabs>
-    <div class="dur-loading" v-if="!videoListParams.show" :style="{height:videoListParams.minHeight}">
+    <div class="dur-loading" v-if="!videoListParams.show" :style="{height:videoListParams.minHeight+'px'}">
       <LoadingCenter loading-width="40px" loading-color="#7b007b" loading-type="dots"></LoadingCenter>
     </div>
     <ListMain v-show="videoListParams.show" @getVideoListSuccess="videoListParams.show=true" :video-list-params="videoListParams"></ListMain>
@@ -32,8 +32,8 @@
       return {
         videoListParams: {
           classify: "",//视频分类
-          minHeight: "100%",//视频列表区域最小高度
-          canLoadingRecent: true,//是否允许下滑加载最新数据
+          minHeight: "80",//视频列表区域最小高度
+          canLoadingRecent: false,//是否允许下滑加载最新数据
           canLoadingMore: true,//是否允许上滑加载更多数据
           show: false
         },
@@ -53,7 +53,7 @@
       //设置 视频列表 块儿的最小高度
       setVideoListHeight(){
         const windowHeight = document.documentElement.clientHeight;
-        this.$set(this.videoListParams, "minHeight", (windowHeight - 45) + "px")
+        this.$set(this.videoListParams, "minHeight", (windowHeight - 45) )
       },
       //发请求 获取 视频分类
       getVideoClassifies(){

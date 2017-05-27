@@ -1,13 +1,13 @@
 <template>
-  <div id="listWrapper" class="video-list-wrapper" :style="{minHeight:videoListParams.minHeight}">
+  <div id="listWrapper" class="video-list-wrapper" :style="{minHeight:videoListParams.minHeight+'px'}">
     <transition  name="slide-fade">
       <div class="loading-recent" v-if="videoListParams.canLoadingRecent&&tools.loadingRecent">
         <LoadingCenter loading-width="25px" loading-color="#444"></LoadingCenter>
       </div>
     </transition >
-    <div class="video-list-cont">
-      <GridBox :columnNum="2" columnSpace="12px">
-        <VideoItem  v-for="video in videoList" :key="video.id" :video-data="video"></VideoItem>
+    <div class="video-list-cont"  :style="{minHeight:videoListParams.minHeight-50+'px'}">
+      <GridBox :columnNum="2" columnSpace="12px"  v-if="videoLists[0]">
+        <VideoItem  v-for="video in videoLists" :key="video.id" :video-data="video"></VideoItem>
       </GridBox>
     </div>
     <transition  name="slide-fade">
@@ -30,6 +30,7 @@
   import GridBox from './GridBox.vue'
   import VideoItem from './VideoItem.vue'
   import LoadingCenter from './LoadingCenter.vue'
+  import {mapGetters} from 'vuex'
   export default{
     props:["video-list-params"],
     data(){
@@ -40,12 +41,21 @@
           loadingMore: false,
           loadingMoreSuccess: true
         },
-        videoList: Config.env.dev ? testData.videoList:[]
+        nowClassify:"",
+        videoLists: []
       }
+    },
+    computed:{
+      ...mapGetters({
+        video_list: "video_list"
+      })
     },
     watch:{
       "videoListParams.classify": function(){
-        this.getVideoList("recent",true);
+        this.nowClassify = this.videoListParams.classify;
+        this.tools.loadingMore = false;
+        this.tools.loadingRecent = false;
+        this.getVideoList("recent");
       }
     },
     mounted(){
@@ -89,12 +99,83 @@
     },
     methods:{
       //获取视频列表
-      getVideoList(type,changeClassify){
-        let ajaxUrl = Config.URI.base + Config.URI.getVideoList;
-        this.$http.post(ajaxUrl,{}).then(({data})=>{
-          this.$emit("getVideoListSuccess");
-          console.log(data);
-        });
+      getVideoList(type){
+        const self = this;
+        //请求数据方式 "recent":获取最新数据  "more":往后获取数据
+        let loadType = "more";
+        if(type){
+          loadType = type;
+        }
+        if(this.video_list.sourceList[self.nowClassify]&&this.video_list.sourceList[self.nowClassify][0]){
+          this.setVideoInStore(true);
+        }
+        else{
+          this.$http.post(`${ Config.URI.base + Config.URI.getVideoList }`,{}).then(({data})=>{
+            if(data.code==0){
+              let videos = data.data || [];
+              let storeParams = {
+                classify: self.nowClassify,
+                list: Config.F.mixArray(videos)
+              }
+              this.$store.dispatch("setVideoSourceList",storeParams);
+              this.setVideoInStore(true);
+            }
+            else{
+              this.setVideoInStore();
+            }
+
+          });
+        }
+      },
+      setVideoInStore(success){
+        const self = this;
+        if(success){
+          let nowShowList = [];
+          const storeShowList = this.video_list.showList[self.nowClassify];
+          if(storeShowList && storeShowList[0]){
+            nowShowList = storeShowList;
+          }
+
+          let smallArr = [];
+          let storeSourceList = this.video_list.sourceList[self.nowClassify];
+          if(storeSourceList && storeSourceList[0]){
+            const len = Math.min(10,storeSourceList.length);
+            for(var i=0; i<len; i++){
+              smallArr.push(storeSourceList[i]);
+            }
+            storeSourceList = storeSourceList.splice(i,len);
+          }
+          Config.F.deleteRepeatItems(nowShowList,smallArr,"id");
+          //设置 显示视频列表
+          let storeParams = {
+            classify: self.nowClassify,
+            list: nowShowList
+          }
+          this.$store.dispatch("setVideoShowList",storeParams);
+
+          //重置 已请求 未显示视频列表
+          let storeParams1 = {
+            classify: self.nowClassify,
+            list: storeSourceList
+          }
+          this.$store.dispatch("setVideoSourceList",storeParams1);
+        }
+        //无论成功失败 都会执行的操作
+        this.$emit("getVideoListSuccess");
+        setTimeout(function(){
+          self.tools.loadingMoreSuccess = true;
+          self.tools.loadingMore = false;
+          self.tools.loadingRecent = false;
+        },1000);
+        this.updateShowVideoList();
+      },
+      updateShowVideoList(){
+        let videos = [];
+        let nowShowList = this.video_list.showList[this.nowClassify];
+        if( nowShowList&& nowShowList[0]){
+          videos = nowShowList;
+        }
+        this.videoLists = videos;
       }
     },
     components:{

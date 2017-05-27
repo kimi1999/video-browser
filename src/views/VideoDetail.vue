@@ -23,7 +23,7 @@
       return {
         videoListParams:{
           classify: "",//视频分类
-          minHeight:"100%",//视频列表区域最小高度
+          minHeight:"80",//视频列表区域最小高度
           canLoadingRecent: false,//是否允许下滑加载最新数据
           canLoadingMore: true,//是否允许上滑加载更多数据
           show:true
@@ -44,12 +44,27 @@
       }
     },
     mounted(){
+      const self = this;
       this.setPlayerHeight();
+      setTimeout(function(){
+        self.getRelatedVideos();
+      },1000);
     },
     methods:{
+      //设置 视频播放区域高度
       setPlayerHeight(){
         const windowWidth = document.documentElement.clientWidth;
         this.playerContParams.relHeight = windowWidth*this.playerContParams.height/this.playerContParams.width;
+        this.setVideoListHeight();
+      },
+      //设置 视频列表 块儿的最小高度
+      setVideoListHeight(){
+        const windowHeight = document.documentElement.clientHeight;
+        const height = windowHeight- this.playerContParams.relHeight -150;
+        this.$set(this.videoListParams, "minHeight", height )
+      },
+      getRelatedVideos(){
+        this.videoListParams.classify = "related";
       }
     },
     components:{

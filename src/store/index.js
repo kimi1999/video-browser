@@ -1,12 +1,12 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import videoList from './components/videoList.js'
+import video_list from './components/video_list.js'
 
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
   modules:{
-    videoList
+    video_list
   }
 });
 

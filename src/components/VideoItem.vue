@@ -5,10 +5,10 @@
           <div class="loading-cont" v-if="!videoBox.bg">
             <LoadingCenter loading-width="25px" loading-color="#7b007b" loading-type="dots"></LoadingCenter>
           </div>
-          <span class="time">{{videoData.time}}</span>
+          <span class="time">{{videoData.duration}}</span>
         </div>
         <div class="disc ellipsis-1">
-          {{videoData.title}}
+          {{videoData.article_title}}
         </div>
         <div class="source">
           <i class="play-icon iconfont icon-bofangshuicon"></i>
@@ -120,9 +120,17 @@
       },
       loadingImg(){
         const self = this;
-        if(this.videoData.cover){
+        let cover = "";
+        if(this.videoData.photos && this.videoData.photos[0]){
+          const photos = this.videoData.photos[0];
+          cover = photos.origin_url;
+          if(photos.sizes && photos.sizes[0]){
+            cover = photos.sizes[0].url;
+          }
+        }
+        if(cover){
           let img = new Image();
-          img.src = this.videoData.cover;
+          img.src = cover;
           img.onload = function(){
             self.videoBox.bg = img.src;
           }

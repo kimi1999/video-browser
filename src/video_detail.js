@@ -1,6 +1,8 @@
 import Vue from 'vue'
+import Config from './assets/js/config'
 import VueResource from 'vue-resource'
 Vue.use(VueResource)
+import store from './store/index'
 import VideoDetail from './views/VideoDetail.vue'
 
 Vue.http.interceptors.push((request, next) => {
@@ -46,6 +48,7 @@ Vue.http.interceptors.push((request, next) => {
 
 new Vue({
   el: "#detailApp",
+  store,
   template: '<VideoDetail/>',
   components:{VideoDetail}
 });
