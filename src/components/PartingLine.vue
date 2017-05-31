@@ -31,17 +31,16 @@
   }
 </style>
 
-<script lang="babel">
-
+<script>
   export default{
-    props:["title-text"],
-    data(){
+    props: ['title-text'],
+    data () {
       return {}
     },
-    mounted(){
+    mounted () {
 
     },
-    methods:{
+    methods: {
 
     }
   }

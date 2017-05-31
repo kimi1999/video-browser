@@ -62,17 +62,16 @@
   }
 </style>
 
-<script lang="babel">
-
+<script>
   export default{
-    props:["video-info-params"],
-    data(){
+    props: ['video-info-params'],
+    data () {
       return {}
     },
-    mounted(){
+    mounted () {
 
     },
-    methods:{
+    methods: {
 
     }
   }

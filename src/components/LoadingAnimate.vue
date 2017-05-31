@@ -214,8 +214,8 @@
   }
 </style>
 
-<script lang="babel">
+<script>
   export default{
-    props:["animate-type","animate-color","animate-width"]
+    props: ['animate-type', 'animate-color', 'animate-width']
   }
 </script>

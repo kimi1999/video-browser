@@ -1,3 +1,4 @@
+/* eslint-disable no-new */
 import Vue from 'vue'
 import Config from './assets/js/config'
 import VueResource from 'vue-resource'
@@ -6,27 +7,27 @@ import store from './store/index'
 import VideoList from './views/VideoList.vue'
 
 Vue.http.interceptors.push((request, next) => {
-  //request.credentials = true;
-  //request.headers.map.Cookie = document.cookie;
-  //console.log(request);
-  var s = "body";//POST 请求 附加参数 放到body里面
-  //GET 请求 附加参数 放到params里面
-  if (request.method == "GET") {
-    s = "params";
+  // request.credentials = true;
+  // request.headers.map.Cookie = document.cookie;
+  // console.log(request);
+  var s = 'body'// POST 请求 附加参数 放到body里面
+  // GET 请求 附加参数 放到params里面
+  if (request.method === 'GET') {
+    s = 'params'
   }
   let postData = {
-    "clientInfo":Config.URI.clientInfos,
-    "device": {
-      "clientId": "cd0f28278428ae55dfca64401d838474",
-      "mccCode": "",
-      "locale": "",
-      "newsCountry": "IN"
+    'clientInfo': Config.URI.clientInfos,
+    'device': {
+      'clientId': 'cd0f28278428ae55dfca64401d838474',
+      'mccCode': '',
+      'locale': '',
+      'newsCountry': 'IN'
     },
-    "appInfo": {"product": 7, "module": 1},
-    "protocol": {"load": 0, "offset": "0", "lang": "en"}
+    'appInfo': {'product': 7, 'module': 1},
+    'protocol': {'load': 0, 'offset': '0', 'lang': 'en'}
   }
-  for(var key in postData){
-    request[s][key] = postData[key];
+  for (var key in postData) {
+    request[s][key] = postData[key]
   }
   // continue to next interceptor
   next((response) => {
@@ -43,12 +44,12 @@ Vue.http.interceptors.push((request, next) => {
      //store.dispatch("login",0);//退出
      }
      */
-  });
-});
+  })
+})
 
 new Vue({
-  el: "#listApp",
+  el: '#listApp',
   store,
   template: '<VideoList />',
-  components:{VideoList}
-});
+  components: {VideoList}
+})

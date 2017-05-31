@@ -12,29 +12,29 @@
     background-color: rgba(255,255,255,.3);
   }
 </style>
-<script lang="babel">
+<script>
   import LoadingAnimate from './LoadingAnimate.vue'
   export default{
-    props:["loading-type","loading-color","loading-width"],
-    data(){
+    props: ['loading-type', 'loading-color', 'loading-width'],
+    data () {
       return {
-        animateType:"circular",
-        animateColor:"#20a0ff",
-        animateWidth:"42px"
+        animateType: 'circular',
+        animateColor: '#20a0ff',
+        animateWidth: '42px'
       }
     },
-    mounted(){
-      if(this.loadingType){
-        this.animateType = this.loadingType;
+    mounted () {
+      if (this.loadingType) {
+        this.animateType = this.loadingType
       }
-      if(this.loadingColor){
-        this.animateColor = this.loadingColor;
+      if (this.loadingColor) {
+        this.animateColor = this.loadingColor
       }
-      if(this.loadingWidth){
-        this.animateWidth = this.loadingWidth;
+      if (this.loadingWidth) {
+        this.animateWidth = this.loadingWidth
       }
     },
-    components:{
+    components: {
       LoadingAnimate
     }
   }

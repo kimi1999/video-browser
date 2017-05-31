@@ -1,5 +1,5 @@
 <template>
-    <div class="video-item" @click="toDetailPage">
+    <div class="video-item">
       <template v-if="videoBox.relHeight">
         <div class="cover" :style="{'height':videoBox.relHeight,'backgroundImage':'url('+videoBox.bg+')'}">
           <div class="loading-cont" v-if="!videoBox.bg">
@@ -80,64 +80,61 @@
     }
   }
 </style>
-<script lang="babel">
+<script>
   import Config from '../assets/js/config'
   import $ from 'jquery'
   import LoadingCenter from './LoadingCenter.vue'
   export default{
-    props:["video-data"],
-    data(){
-        return{
-          videoBox:{
-            width:162,
-            height:90,
-            relHeight:"",
-            bg:null
+    props: ['video-data'],
+    data () {
+      return {
+        videoBox: {
+          width: 162,
+          height: 90,
+          relHeight: '',
+          bg: null
+        }
+      }
+    },
+    mounted () {
+      const self = this
+      this.resetVideoBoxHeight()
+      Config.F.addEvent(window, 'resize', function () {
+        self.resetVideoBoxHeight()
+      })
+      this.loadingImg()
+    },
+    methods: {
+      resetVideoBoxHeight () {
+        const self = this
+        const timer = setInterval(function () {
+          let coverWidth = $('.video-item').width()
+          if (coverWidth) {
+            clearInterval(timer)
+            self.$set(self.videoBox, 'relHeight', (coverWidth * self.videoBox.height / self.videoBox.width) + 'px')
+          }
+        }, 100)
+      },
+      loadingImg () {
+        const self = this
+        let cover = ''
+        if (this.videoData.photos && this.videoData.photos[0]) {
+          const photos = this.videoData.photos[0]
+          cover = photos.origin_url
+          if (photos.sizes && photos.sizes[0]) {
+            cover = photos.sizes[0].url
           }
         }
-    },
-    mounted(){
-      const self = this;
-      this.resetVideoBoxHeight();
-      Config.F.addEvent(window,"resize",function(){
-        self.resetVideoBoxHeight();
-      });
-      this.loadingImg();
-    },
-    methods:{
-      resetVideoBoxHeight(){
-        const self = this;
-        const timer = setInterval(function(){
-          let coverWidth = $(".video-item").width();
-          if(coverWidth){
-            clearInterval(timer);
-            self.$set(self.videoBox,"relHeight",(coverWidth*self.videoBox.height/self.videoBox.width)+"px");
-          }
-        },100);
-      },
-      toDetailPage(){
-        window.open(Config.URI.toDetailPage);
-      },
-      loadingImg(){
-        const self = this;
-        let cover = "";
-        if(this.videoData.photos && this.videoData.photos[0]){
-          const photos = this.videoData.photos[0];
-          cover = photos.origin_url;
-          if(photos.sizes && photos.sizes[0]){
-            cover = photos.sizes[0].url;
-          }
-        }
-        if(cover){
-          let img = new Image();
-          img.src = cover;
-          img.onload = function(){
-            self.videoBox.bg = img.src;
+        if (cover) {
+          let img = new Image()
+          img.src = cover
+          img.onload = function () {
+            self.videoBox.bg = img.src
           }
         }
       }
     },
-    components:{
+    components: {
       LoadingCenter
     }
   }

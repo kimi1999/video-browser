@@ -73,24 +73,24 @@
     opacity: 0!important;
   }
 </style>
-<script lang="babel">
-  import $ from "jquery"
+<script>
+  import $ from 'jquery'
   require('perfect-scrollbar/dist/css/perfect-scrollbar.css')
   import Ps from 'perfect-scrollbar'
   export default{
-    props:["tabs"],
-    data(){
-        return{}
+    props: ['tabs'],
+    data () {
+      return {}
     },
-    mounted(){
-      Ps.initialize(document.getElementById("scrollTab"));//初始化 滚动分类
+    mounted () {
+      Ps.initialize(document.getElementById('scrollTab'))// 初始化 滚动分类
     },
-    methods:{
-      checkTab(tab){
-        $(".ps-container.ps-active-x  .ps-scrollbar-x-rail").css({
-          "opacity":0
-        });
-        this.$emit("changTab",tab)
+    methods: {
+      checkTab (tab) {
+        $('.ps-container.ps-active-x  .ps-scrollbar-x-rail').css({
+          'opacity': 0
+        })
+        this.$emit('changTab', tab)
       }
     }
   }
