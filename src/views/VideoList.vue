@@ -59,36 +59,26 @@
       // 发请求 获取 视频分类
       getVideoClassifies () {
         // 发请求 获取分类
-        let ajaxUrl = Config.URI.base + Config.URI.getVideoClassify
+        let ajaxUrl = Config.URI.base + Config.URI.getVideoCats
         this.$http.post(ajaxUrl, {}).then(({data}) => {
           if (data.code === 0) {
-            let lang = Config.env.lang
-            let hasVideoChannels = []
-            let perfectChannel = null
-            if (data.data.channels) {
-              for (var i = 0; i < data.data.channels.length; i++) {
-                const channel = data.data.channels[i]
-                if (channel.lang && channel.lang === lang) {
-                  perfectChannel = channel
-                }
-                if (channel.videocates[0]) {
-                  hasVideoChannels.push(channel)
-                }
-              }
-              if (!perfectChannel && hasVideoChannels[0]) {
-                perfectChannel = hasVideoChannels[0]
-              }
-              if (perfectChannel) {
-                this.tabs.list = perfectChannel.videocates
-                this.triggerChangTab(this.tabs.list[0])
-              }
-            }
+            this.tabs.list = data.data.cats
+            this.triggerChangTab(this.tabs.list[0])
           }
         })
       },
       // 触发 视频分类切换
       triggerChangTab (tab) {
-        this.tabs.recent = tab.id
+        let scrollTop = 0
+        if (this.videoListParams.classify) {
+          if (document.documentElement) {
+            scrollTop = document.documentElement.scrollTop
+          }
+          if (document.body) {
+            scrollTop = document.body.scrollTop
+          }
+          this.$store.dispatch('saveScrollPosition', {classify: this.videoListParams.classify, scrollTop: scrollTop})
+        }
         this.tabs.recent = tab.id
         this.videoListParams.classify = tab.id
         this.videoListParams.show = false

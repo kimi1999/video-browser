@@ -179,8 +179,9 @@ const F = {
 let URI = {
   clientInfo: '',
   toDetailPage: '/video_detail.html', // 跳转到视频详情页的地址
-  base: 'http://test.feed.mynewshunter.com', // 后台接口 base路径
-  getVideoClassify: '/mercury/channel/list', // 获取视频分类
+  // base: 'http://test.feed.mynewshunter.com', // 后台接口 base路径
+  base: 'http://qatest.news.apusapps.com',
+  getVideoCats: '/video/cats', // 获取视频分类（新）
   getVideoList: '/video/list', // 获取视频列表
   getOneVideoInfo: '/video/get', // 获取某一个视频的详细信息
   getRelatedVideos: '/video/recommend'// 获取某一个视频的详细信息

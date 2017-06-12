@@ -1,5 +1,7 @@
 import * as types from '../mutation-types'
 const state = {
+  pagePosition: {},
+  nextVideoListStart: {},
   showList: {}, // 显示的视频列表
   sourceList: {}  // 每次请求的50条数据 暂存地址
 }
@@ -16,6 +18,20 @@ const mutations = {
     if (val.classify) {
       state.sourceList[val.classify] = val.list || []
     }
+  },
+  [types.SET_NEXT_VIDEO_LIST_START] (state, val) {
+    if (val.classify && val.id) {
+      state.nextVideoListStart[val.classify] = val.id
+    }
+  },
+  [types.SAVE_SCROLL_POSITION] (state, val) {
+    let pagePosition = 0
+    if (val.scrollTop) {
+      pagePosition = val.scrollTop
+    }
+    if (val.classify) {
+      state.pagePosition[val.classify] = pagePosition
+    }
   }
 }
 
@@ -25,6 +41,12 @@ const actions = {
   },
   setVideoSourceList ({commit}, val) {
     commit(types.SET_VIDEO_SOURCE_LIST, val)
+  },
+  setNextVideoListStart ({commit}, val) {
+    commit(types.SET_NEXT_VIDEO_LIST_START, val)
+  },
+  saveScrollPosition ({commit}, val) {
+    commit(types.SAVE_SCROLL_POSITION, val)
   }
 }
 

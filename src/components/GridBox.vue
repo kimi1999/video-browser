@@ -1,16 +1,15 @@
-
-
-
-<script>
-  /** ************* 横向每行 n 个盒子 平铺布局 ****************/
+<script lang="babel">
+  // 横向每行 n 个盒子 平铺布局
   import Vue from 'vue'
-  Vue.component('GridBox', {
+  var GridBox = Vue.extend({
+  // Vue.component('GridBox', {
+    name: 'GridBox',
     props: {
-      columnNum: {/* 每一行排列盒子的个数 如： 2 */
+      columnNum: { // 每一行排列盒子的个数,如：2
         type: Number,
         required: true
       },
-      columnSpace: {/* 每一行 盒子之间 水平方向的间距 如："10px" */
+      columnSpace: { // 每一行盒子之间 水平方向的间距,如:"10px"
         type: String
       }
     },
@@ -44,6 +43,6 @@
       var myHtml = createElement('div', {}, vNode)
       return myHtml
     }
-
   })
+  export default GridBox
 </script>

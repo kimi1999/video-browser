@@ -104,26 +104,62 @@
         if (type) {
           loadType = type
         }
-        console.log(loadType)
         if (this.video_list.sourceList[self.nowClassify] && this.video_list.sourceList[self.nowClassify][0]) {
-          this.setVideoInStore(true)
+          this.setVideoInStore(true, loadType)
         } else {
-          this.$http.post(`${Config.URI.base + Config.URI.getVideoList}`, {}).then(({data}) => {
+          let postData = {
+            'sinceId': 0, // 默认传0
+            'category': self.nowClassify,
+            'maxId': -1 // 下一次获取视频的开始ID，第一次获取时传-1
+          }
+          if (loadType === 'more' && this.video_list.nextVideoListStart[self.nowClassify]) {
+            postData.maxId = this.video_list.nextVideoListStart[self.nowClassify]
+          }
+          this.$http.post(`${Config.URI.base + Config.URI.getVideoList}`, postData).then(({data}) => {
             if (data.code === 0) {
               let videos = data.data || []
+              // 将当前分类下一次获取视频列表的开始id存到store中__start
+              let nextStartId = videos[0].id
+              for (var i = 1; i < videos.length; i++) {
+                if (videos[i].id < nextStartId) {
+                  nextStartId = videos[i].id
+                }
+              }
+              this.$store.dispatch('setNextVideoListStart', {classify: self.nowClassify, id: nextStartId})
+              // 将当前分类下一次获取视频列表的开始id存到store中__end
+              // 将请求回来，新的视频列表数据去除重复后存到store中
+              if (this.video_list.showList[self.nowClassify]) {
+                const nShowList = this.video_list.showList[self.nowClassify]
+                let repeatList = []
+                nShowList.forEach((video) => {
+                  videos.forEach((vd) => {
+                    if (video.id === vd.id) {
+                      repeatList.push(video)
+                    }
+                  })
+                })
+                repeatList.forEach((video) => {
+                  for (var t = 0; t < videos.length; t++) {
+                    if (videos[t].id === video.id) {
+                      videos.splice(t, 1)
+                      break
+                    }
+                  }
+                })
+              }
               let storeParams = {
                 classify: self.nowClassify,
                 list: Config.F.mixArray(videos)
               }
               this.$store.dispatch('setVideoSourceList', storeParams)
-              this.setVideoInStore(true)
+              this.setVideoInStore(true, loadType)
             } else {
-              this.setVideoInStore()
+              this.setVideoInStore(false, loadType)
             }
           })
         }
       },
-      setVideoInStore (success) {
+      setVideoInStore (success, loadType) {
         const self = this
         if (success) {
           let nowShowList = []
@@ -133,13 +169,19 @@
           }
 
           let smallArr = []
+          let storeRemainingList = []
           let storeSourceList = this.video_list.sourceList[self.nowClassify]
           if (storeSourceList && storeSourceList[0]) {
             const len = Math.min(10, storeSourceList.length)
             for (var i = 0; i < len; i++) {
               smallArr.push(storeSourceList[i])
             }
-            storeSourceList = storeSourceList.splice(i, len)
+            if (len < storeSourceList.length) {
+              for (var j = len; j < storeSourceList.length; j++) {
+                storeRemainingList.push(storeSourceList[j])
+              }
+            }
+            // storeSourceList = storeSourceList.splice(0, len)
           }
           Config.F.deleteRepeatItems(nowShowList, smallArr, 'id')
           // 设置 显示视频列表
@@ -152,7 +194,7 @@
           // 重置 已请求 未显示视频列表
           let storeParams1 = {
             classify: self.nowClassify,
-            list: storeSourceList
+            list: storeRemainingList
           }
           this.$store.dispatch('setVideoSourceList', storeParams1)
         }
@@ -163,15 +205,20 @@
           self.tools.loadingMore = false
           self.tools.loadingRecent = false
         }, 1000)
-        this.updateShowVideoList()
+        this.updateShowVideoList(loadType)
       },
-      updateShowVideoList () {
+      updateShowVideoList (loadType) {
         let videos = []
         let nowShowList = this.video_list.showList[this.nowClassify]
         if (nowShowList && nowShowList[0]) {
           videos = nowShowList
         }
         this.videoLists = videos
+        if (loadType === 'recent' && this.video_list.pagePosition[this.nowClassify]) {
+          setTimeout(() => {
+            window.scrollTo(0, this.video_list.pagePosition[this.nowClassify])
+          }, 200)
+        }
       },
       toDetailPage () {
         console.log('-------------')
