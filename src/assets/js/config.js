@@ -1,4 +1,4 @@
-/* eslint-disable no-redeclare */
+/* eslint-disable no-redeclare,camelcase,no-useless-escape */
 
 const env = {
   dev: true,
@@ -172,33 +172,81 @@ const F = {
       aArr[iRand] = temp
     }
     return aArr
+  },
+  /**
+   * 将URL后面的参数转换成一个对象
+   *     url : url地址
+   */
+  urlParamToObj: function (url) {
+    var reg_url = /^[^\?]+\?([\w\W]+)$/
+    var reg_para = /([^&=]+)=([\w\W]*?)(&|$)/g // g is very important
+    var arr_url = reg_url.exec(url)
+    var ret = {}
+    if (arr_url && arr_url[1]) {
+      var str_para = arr_url[1], result
+      while ((result = reg_para.exec(str_para)) != null) {
+        ret[result[1]] = result[2]
+      }
+    }
+    return ret
+  },
+  /**
+   * 不足10 的数字前面补0
+   */
+  addZero: function (num) {
+    var nu = parseInt(num)
+    return nu >= 10 ? nu : '0' + nu
+  },
+  /* 格式化时间 */
+  formatTime: function (timeLong) {
+    let reTimeStr = '00:00'
+    if (timeLong && /^\d+$/.test(timeLong)) {
+      const t = parseInt(timeLong)
+      if (t < 60) {
+        // 一分钟以内
+        reTimeStr = '00:' + t
+      } else if (t >= 60 && t < 60 * 60) {
+        // 一分钟到一小时之间
+        let m = t / 60
+        let s = t % 60
+        reTimeStr = this.addZero(m) + ':' + this.addZero(s)
+      } else if (t >= 60 * 60 && t < 60 * 60 * 24) {
+        // 一小时到24小时之间
+        let h = t / (60 * 60)
+        let m = t % (60 * 60) / 60
+        let s = t % (60 * 60 * 60) % 60
+        reTimeStr = this.addZero(h) + ':' + this.addZero(m) + ':' + this.addZero(s)
+      }
+    }
+    return reTimeStr
   }
 
 }
 
 let URI = {
   clientInfo: '',
+  // toDetailPage: 'http://test.fe.apuscn.com/zhangxiaofeng/video-browser/video_detail.html', // 跳转到视频详情页的地址
+  toPageBase: 'http://127.0.0.1:8081/',
   toDetailPage: '/video_detail.html', // 跳转到视频详情页的地址
-  // base: 'http://test.feed.mynewshunter.com', // 后台接口 base路径
-  base: 'http://qatest.news.apusapps.com',
+  toListPage: '/video_list.html',
+  base: 'http://qatest.news.apusapps.com', // 后台接口 base路径
   getVideoCats: '/video/cats', // 获取视频分类（新）
   getVideoList: '/video/list', // 获取视频列表
-  getOneVideoInfo: '/video/get', // 获取某一个视频的详细信息
-  getRelatedVideos: '/video/recommend'// 获取某一个视频的详细信息
+  getOneVideoInfo: '/video/get' // 获取某一个视频的详细信息
 }
-if (env.inApusBrowser) {
-  URI.clientInfos = window.WebstoreInterface.getClientInfoForVideo()
-} else {
-  URI.clientInfos = 'vXzAhti9wSg%2BbPTvk2YxhMwvw6jzPoIg6kIfk7OI%2BJiXQ5jXVs3xM8NkJcxUXtiKyg7FYU%2FWwdXRd2g7GrfbOQTV9BjtCyICPp11bMeHAWc%2Fw17wC5SV1eKZ4RKoPyqxPgHnfPTopaNGjdc7pLzIEyoP%2BA0pDkqf3T2hppbhjiD3LXAU0Etf3YCa%2FkD1J3P6s72KVpke4qeB%2F37JECAzkuoc0Cx0ke8JcQVzT%2BtEc6ftZ9KQqAKcJeFas%2FLPDeljZfKh08aihWlUkNoj7h0HAyJY3NsfmQLSpjjWPyHiSQ6POYJX73%2BBkTYmxiLrm3EMMt5wMEQECz%2BJ3lp4ugjkx7Rv9M3KkRRGBXimCmqnIo7Xn2oWsUxlGq9uHI9%2BfV%2FIzzZQ9SogLMHx5wFfSxVp%2BPb06fu0z%2BEfcu44E6pqJ2wHQ7OmYpMavM1PrMPnywjZMAOhbMwvVt5I4S7JRoDtpk3bF74c0GG%2FwfnXSO%2FV0IQNlcKDHp9ulk1r2o7ZpzwmX5TWnBYiTsu5BzBNcWV8GcfoDMMeZTmU1GoQF3p3I%2FBWeZ3qnVbXGxfvh9Wz91eZmVQc8B9HsdtA0k%2BFM6Ujpb4aplC2dj9E9iuikWHnqncpec7e3prY9Bfuk92e9s%2BqRrTbVe953EQ%3D'
-}
+
 // 测试环境
 if (env.test) {
-  URI.base = ''
-  URI.toDetailPage = ''
+  // URI.base = ''
+  URI.toPageBase = 'http://test.fe.apuscn.com/zhangxiaofeng/video-browser'
+  // URI.toListPage = ''
+  // URI.toDetailPage = ''
 }
 // 线上环境
 if (env.product) {
   URI.base = ''
+  URI.toPageBase = 'test.fe.apuscn.com/zhangxiaofeng/video-browser'
+  URI.toListPage = ''
   URI.toDetailPage = ''
 }
 

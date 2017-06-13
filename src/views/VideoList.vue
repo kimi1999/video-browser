@@ -1,6 +1,6 @@
 <template>
   <div class="list-main">
-    <SlideTabs :tabs="tabs" v-if="tabs.list[0]" @changTab="triggerChangTab"></SlideTabs>
+    <SlideTabs :tabs="tabs" :now-page-classify="nowPageClassify" v-if="tabs.list[0]" @changTab="triggerChangTab"></SlideTabs>
     <div class="dur-loading" v-if="!videoListParams.show" :style="{height:videoListParams.minHeight+'px'}">
       <LoadingCenter loading-width="40px" loading-color="#7b007b" loading-type="dots"></LoadingCenter>
     </div>
@@ -41,7 +41,8 @@
         tabs: {
           list: [],
           recent: ''
-        }
+        },
+        nowPageClassify: null
       }
     },
     mounted () {
@@ -58,12 +59,22 @@
       },
       // 发请求 获取 视频分类
       getVideoClassifies () {
+        let urlParams = Config.F.urlParamToObj(window.location.href)
         // 发请求 获取分类
         let ajaxUrl = Config.URI.base + Config.URI.getVideoCats
         this.$http.post(ajaxUrl, {}).then(({data}) => {
           if (data.code === 0) {
             this.tabs.list = data.data.cats
-            this.triggerChangTab(this.tabs.list[0])
+            let nowPageClassify = this.tabs.list[0]
+            if ('video_classify' in urlParams) {
+              this.tabs.list.forEach((_classify) => {
+                if (_classify.id === parseInt(urlParams['video_classify'])) {
+                  nowPageClassify = _classify
+                }
+              })
+            }
+            this.nowPageClassify = nowPageClassify
+            this.triggerChangTab(nowPageClassify)
           }
         })
       },

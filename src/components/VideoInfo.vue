@@ -9,9 +9,9 @@
         {{videoInfoParams.source}}
       </span>
 
-      <i class="iconfont icon-more share-more"></i>
-      <i class="iconfont icon-whatsapp share-whatsapp"></i>
-      <i class="iconfont icon-facebook share-fb"></i>
+      <i v-if="inAPUSBrowser" class="iconfont icon-more share-more" @click="browserShare('more')"></i>
+      <i v-if="inAPUSBrowser" class="iconfont icon-whatsapp share-whatsapp" @click="browserShare('whatsapp')"></i>
+      <i v-if="inAPUSBrowser" class="iconfont icon-facebook share-fb" @click="browserShare('facebook')"></i>
     </div>
   </div>
 </template>
@@ -63,16 +63,40 @@
 </style>
 
 <script>
+  import Config from '../assets/js/config'
   export default{
     props: ['video-info-params'],
     data () {
-      return {}
+      return {
+        inAPUSBrowser: Config.env.inApusBrowser
+      }
     },
     mounted () {
 
     },
     methods: {
-
+      browserShare (type) {
+        const urlParams = Config.F.urlParamToObj(window.location.href)
+        let toUrl = ''
+        switch (type) {
+          case 'whatsapp':
+            toUrl = 'whatsapp://send?text='
+            break
+          case 'facebook':
+            toUrl = 'http://m.facebook.com/sharer?u='
+            break
+          case 'more':
+            toUrl = 'tercel://moreshare'
+            break
+          default:
+            break
+        }
+        toUrl += window.location.href
+        if (!('from_share' in urlParams)) {
+          toUrl += '&from_share=1'
+        }
+        window.open(toUrl)
+      }
     }
   }
 </script>

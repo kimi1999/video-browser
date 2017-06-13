@@ -1,20 +1,25 @@
 <template>
   <div id="listWrapper" class="video-list-wrapper" :style="{minHeight:videoListParams.minHeight+'px'}">
-    <transition  name="slide-fade">
-      <div class="loading-recent" v-if="videoListParams.canLoadingRecent&&tools.loadingRecent">
-        <LoadingCenter loading-width="25px" loading-color="#444"></LoadingCenter>
-      </div>
-    </transition >
-    <div class="video-list-cont"  :style="{minHeight:videoListParams.minHeight-50+'px'}">
-      <GridBox :columnNum="2" columnSpace="12px"  v-if="videoLists[0]">
-        <VideoItem  @click="toDetailPage"  v-for="video in videoLists" :key="video.id" :video-data="video"></VideoItem>
-      </GridBox>
+    <div v-if="videoListParams.inDetail && videoLists.length==0" :style="{height:videoListParams.minHeight+'px'}" style="width: 100%">
+      <LoadingCenter loading-width="25px" loading-color="#7b007b" loading-type="dots"></LoadingCenter>
     </div>
-    <transition  name="slide-fade">
-      <div class="loading-more" v-if="videoListParams.canLoadingMore&&tools.loadingMore">
-        <LoadingCenter loading-width="25px" loading-color="#444"></LoadingCenter>
+    <template v-else>
+      <transition  name="slide-fade">
+        <div class="loading-recent" v-if="videoListParams.canLoadingRecent&&tools.loadingRecent">
+          <LoadingCenter loading-width="25px" loading-color="#444"></LoadingCenter>
+        </div>
+      </transition >
+      <div class="video-list-cont"  :style="{minHeight:videoListParams.minHeight-50+'px'}">
+        <GridBox :columnNum="2" columnSpace="12px"  v-if="videoLists[0]">
+          <VideoItem  @click.native="toDetailPage(video)"  v-for="video in videoLists" :key="video.id" :video-data="video"></VideoItem>
+        </GridBox>
       </div>
-    </transition>
+      <transition  name="slide-fade">
+        <div class="loading-more" v-if="videoListParams.canLoadingMore&&tools.loadingMore">
+          <LoadingCenter loading-width="25px" loading-color="#444"></LoadingCenter>
+        </div>
+      </transition>
+    </template>
   </div>
 </template>
 
@@ -59,6 +64,10 @@
     },
     mounted () {
       const self = this
+      if (this.videoListParams.inDetail) {
+        this.nowClassify = this.videoListParams.classify
+        this.getVideoList('recent')
+      }
       // 初始化 滑动加载最新 和 滑动加载更多
       Config.F.initTouchLoading({
         elm: document.getElementById('listWrapper'),
@@ -220,9 +229,15 @@
           }, 200)
         }
       },
-      toDetailPage () {
-        console.log('-------------')
-        // window.open(Config.URI.toDetailPage);
+      toDetailPage (video) {
+        const toUrl = Config.URI.toPageBase + Config.URI.toDetailPage + '?id=' + video.id
+        if (this.videoListParams.inDetail) {
+          // 视频详情页的的相关视频点击
+          window.location.href = toUrl
+        } else {
+          window.location.href = toUrl
+        }
+//        window.open(toUrl)
       }
     },
     components: {

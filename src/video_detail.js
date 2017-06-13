@@ -6,6 +6,7 @@ Vue.use(VueResource)
 import store from './store/index'
 import VideoDetail from './views/VideoDetail.vue'
 
+
 Vue.http.interceptors.push((request, next) => {
   // request.credentials = true;
   // request.headers.map.Cookie = document.cookie;
@@ -16,15 +17,20 @@ Vue.http.interceptors.push((request, next) => {
     s = 'params'
   }
   let postData = {
-    'clientInfo': Config.URI.clientInfos,
-    'device': {
-      'clientId': 'cd0f28278428ae55dfca64401d838474',
-      'mccCode': '',
-      'locale': '',
-      'newsCountry': 'IN'
-    },
-    'appInfo': {'product': 7, 'module': 1},
-    'protocol': {'load': 0, 'offset': '0', 'lang': 'en'}
+    'lang': 'en',
+    'moduleId': 1,
+    'productId': 7,
+    'newsCountry': 'IN'
+  }
+  var browserLanguage = navigator.language || ''
+  if (!browserLanguage) {
+    var arr = browserLanguage.split('-')
+    if (arr[0]) {
+      postData.lang = arr[0]
+    }
+    if (arr[1]) {
+      postData.newsCountry = arr[1]
+    }
   }
   for (var key in postData) {
     request[s][key] = postData[key]

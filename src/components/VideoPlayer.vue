@@ -3,7 +3,7 @@
     <div v-show="videoIsReady" class="iframe-wrapper" id="APUSVideoPlayer">
 
     </div>
-    <div v-if="!videoIsReady" class="cover-cont">
+    <div v-if="!videoIsReady"  class="cover-cont" :style="{'background': 'url('+videoCover+')'}">
       <LoadingCenter loading-width="25px" loading-color="#7b007b" loading-type="dots"></LoadingCenter>
     </div>
   </div>
@@ -23,7 +23,6 @@
       height: 100%;
       background-color: #000;
       background-size: cover !important;
-      background: url("../assets/images/test-video-cover.png");
     }
     .iframe-wrapper{
       width: 100%;
@@ -43,13 +42,20 @@
     props: ['player-cont-params'],
     data () {
       return {
+        videoCover: '',
         videoIsReady: false
       }
     },
     mounted () {
+      this.initCover()
       this.initIframePlayer()
     },
     methods: {
+      initCover () {
+        if (this.playerContParams.video.photos && this.playerContParams.video.photos[0]) {
+          this.videoCover = this.playerContParams.video.photos[0].origin_url
+        }
+      },
       initIframePlayer () {
         var a = document.createElement('script')
         a.type = 'text/javascript'
@@ -66,7 +72,7 @@
               const player = new YT.Player('APUSVideoPlayer', {
                 height: '100%',
                 width: '100%',
-                videoId: self.playerContParams.video.id,
+                videoId: self.playerContParams.video.source_url,
                 events: {
                   'onReady': self.onPlayerReady,
                   'onStateChange': self.onPlayerStateChange,
@@ -87,8 +93,7 @@
                   'controls': 1, // 此参数会指明视频播放器控件是否会显示  值：0、1或2。默认值为1
                   'fs': 1, // ：0或1。默认值为1，该值会使全屏按钮显示。将此参数设为0会阻止全屏按钮显示。
                   'cc_load_policy': 1, // 是否显示字幕  将此值设为1会使系统在默认情况下显示字幕，即使在用户关闭字幕的情况下也是如此
-                  'modestbranding': 1, // 播放控制条上是否显示 youtube图标 默认 0: 显示 ；1: 不显示；
-                  'origin': 'https://www.youtube.com'
+                  'modestbranding': 1 // 播放控制条上是否显示 youtube图标 默认 0: 显示 ；1: 不显示；
                 }
               })
             }

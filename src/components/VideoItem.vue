@@ -5,7 +5,7 @@
           <div class="loading-cont" v-if="!videoBox.bg">
             <LoadingCenter loading-width="25px" loading-color="#7b007b" loading-type="dots"></LoadingCenter>
           </div>
-          <span class="time">{{videoData.duration}}</span>
+          <span class="time">{{formatTime(videoData.duration)}}</span>
         </div>
         <div class="disc ellipsis-1">
           {{videoData.article_title}}
@@ -114,6 +114,9 @@
             self.$set(self.videoBox, 'relHeight', (coverWidth * self.videoBox.height / self.videoBox.width) + 'px')
           }
         }, 100)
+      },
+      formatTime (time) {
+        return Config.F.formatTime(time)
       },
       loadingImg () {
         const self = this

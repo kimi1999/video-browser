@@ -4,7 +4,7 @@
       <i></i>
       <div class="tab-list" id="scrollTab">
         <p>
-          <span v-for="tab in tabs.list" @click="checkTab(tab)" :key="tab.id"  :class="{on:tab.id==tabs.recent}">
+          <span v-for="tab in tabs.list" @click="checkTab(tab)" :tab-id="tab.id" :key="tab.id"  :class="{on:tab.id==tabs.recent}">
             {{tab.text}}
           </span>
         </p>
@@ -31,7 +31,6 @@
       padding: 0 12px 0 42px;
       line-height: 44px;
       box-sizing: border-box;
-      //overflow: hidden;
       i{
         position: absolute;
         left: 12px;
@@ -72,25 +71,36 @@
   .ps:hover > .ps__scrollbar-x-rail, .ps:hover > .ps__scrollbar-y-rail{
     opacity: 0!important;
   }
+  .ps>.ps__scrollbar-x-rail{
+    height: 0px!important;
+  }
 </style>
 <script>
   import $ from 'jquery'
+  import Config from '../assets/js/config'
   require('perfect-scrollbar/dist/css/perfect-scrollbar.css')
   import Ps from 'perfect-scrollbar'
   export default{
-    props: ['tabs'],
+    props: ['now-page-classify', 'tabs'],
     data () {
       return {}
     },
     mounted () {
+      let nowClassify = this.nowPageClassify
       Ps.initialize(document.getElementById('scrollTab'))// 初始化 滚动分类
+      let offsetLeft = $('[tab-id=' + nowClassify.id + ']').offset().left
+      if (offsetLeft > 40) {
+        offsetLeft -= 40
+      }
+      $('#scrollTab').scrollLeft(offsetLeft)
     },
     methods: {
       checkTab (tab) {
         $('.ps-container.ps-active-x  .ps-scrollbar-x-rail').css({
           'opacity': 0
         })
-        this.$emit('changTab', tab)
+        window.location.href = Config.URI.toPageBase + Config.URI.toListPage + '?video_classify=' + tab.id
+        // this.$emit('changTab', tab)
       }
     }
   }
