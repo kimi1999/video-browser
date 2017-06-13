@@ -125,8 +125,8 @@
             postData.maxId = this.video_list.nextVideoListStart[self.nowClassify]
           }
           this.$http.post(`${Config.URI.base + Config.URI.getVideoList}`, postData).then(({data}) => {
-            if (data.code === 0) {
-              let videos = data.data || []
+            if (data.code === 0 && data.data && data.data[0]) {
+              let videos = data.data
               // 将当前分类下一次获取视频列表的开始id存到store中__start
               let nextStartId = videos[0].id
               for (var i = 1; i < videos.length; i++) {
@@ -199,6 +199,10 @@
             list: nowShowList
           }
           this.$store.dispatch('setVideoShowList', storeParams)
+          // GA打点统计"视频分类统计"
+          if (window.ga) {
+            window.ga('send', 'event', 'scroll_event', 'scroll', 'scroll_classify_' + self.nowClassify + '_' + this.videoListParams.classifyTxt + '_' + nowShowList.length)
+          }
 
           // 重置 已请求 未显示视频列表
           let storeParams1 = {
@@ -231,13 +235,16 @@
       },
       toDetailPage (video) {
         const toUrl = Config.URI.toPageBase + Config.URI.toDetailPage + '?id=' + video.id
+        let category = 'video'
         if (this.videoListParams.inDetail) {
           // 视频详情页的的相关视频点击
-          window.location.href = toUrl
-        } else {
-          window.location.href = toUrl
+          category = 'recommended'
         }
-//        window.open(toUrl)
+        // GA打点统计"视频分类统计"
+        if (window.ga) {
+          window.ga('send', 'event', category, 'click', 'video_' + category + '_' + this.nowClassify + '_' + this.videoListParams.classifyTxt + '_' + video.id)
+        }
+        window.location.href = toUrl
       }
     },
     components: {

@@ -33,6 +33,7 @@
       return {
         videoListParams: {
           classify: '', // 视频分类
+          classifyTxt: '',
           minHeight: '80', // 视频列表区域最小高度
           canLoadingRecent: false, // 是否允许下滑加载最新数据
           canLoadingMore: true, // 是否允许上滑加载更多数据
@@ -63,8 +64,11 @@
         // 发请求 获取分类
         let ajaxUrl = Config.URI.base + Config.URI.getVideoCats
         this.$http.post(ajaxUrl, {}).then(({data}) => {
-          if (data.code === 0) {
-            this.tabs.list = data.data.cats
+          if (data.code === 0 && data.data) {
+            this.tabs.list = data.data.cats || []
+            if (!this.tabs.list[0]) {
+              window.location.href = Config.URI.toPageBase + '/error.html'
+            }
             let nowPageClassify = this.tabs.list[0]
             if ('video_classify' in urlParams) {
               this.tabs.list.forEach((_classify) => {
@@ -72,6 +76,10 @@
                   nowPageClassify = _classify
                 }
               })
+            }
+            // GA打点统计"视频分类统计"
+            if (window.ga) {
+              window.ga('send', 'event', 'category_list', 'click', 'video_classify_' + nowPageClassify.id + '_' + nowPageClassify.text)
             }
             this.nowPageClassify = nowPageClassify
             this.triggerChangTab(nowPageClassify)
@@ -92,6 +100,7 @@
         }
         this.tabs.recent = tab.id
         this.videoListParams.classify = tab.id
+        this.videoListParams.classifyTxt = tab.text
         this.videoListParams.show = false
       }
     },

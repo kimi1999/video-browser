@@ -28,6 +28,7 @@
         videoListParams: {
           inDetail: true,
           classify: '', // 视频分类
+          classifyTxt: '',
           minHeight: '80', // 视频列表区域最小高度
           canLoadingRecent: false, // 是否允许下滑加载最新数据
           canLoadingMore: true, // 是否允许上滑加载更多数据
@@ -35,6 +36,8 @@
         },
         videoInfoParams: {
           id: null,
+          classify: '',
+          classifyTxt: '',
           title: null,
           source: null
         },
@@ -43,14 +46,31 @@
           height: 200,
           relHeight: 200,
           video: null
-        }
+        },
+        classifyList: []
       }
     },
     mounted () {
-      this.getVideoDetail()
+      this.getVideoClassifies()
       this.setPlayerHeight()
     },
     methods: {
+      // 发请求 获取 视频分类
+      getVideoClassifies () {
+        // 发请求 获取分类
+        let ajaxUrl = Config.URI.base + Config.URI.getVideoCats
+        this.$http.post(ajaxUrl, {}).then(({data}) => {
+          if (data.code === 0 && data.data) {
+            const classifyList = data.data.cats || []
+            if (!classifyList[0]) {
+              window.location.href = Config.URI.toPageBase + '/error.html'
+            } else {
+              this.classifyList = classifyList
+              this.getVideoDetail()
+            }
+          }
+        })
+      },
       // 获取视频详情
       getVideoDetail () {
         const topUrl = window.location.href
@@ -69,9 +89,18 @@
                 if (nowVideo.categories && nowVideo.categories[0]) {
                   classify = nowVideo.categories[0]
                 }
+                let classifyTxt = 1
+                this.classifyList.forEach((cl) => {
+                  if (cl.id === classify) {
+                    classifyTxt = cl.text
+                  }
+                })
                 this.videoListParams.classify = classify
+                this.videoListParams.classifyTxt = classifyTxt
                 // 渲染当前视频
                 this.videoInfoParams.id = parseInt(urlParams['id'])
+                this.videoInfoParams.classify = classify
+                this.videoInfoParams.classifyTxt = classifyTxt
                 this.videoInfoParams.title = nowVideo.article_title
                 this.videoInfoParams.source = nowVideo.source
                 this.playerContParams.video = nowVideo

@@ -95,6 +95,10 @@
         if (!('from_share' in urlParams)) {
           toUrl += '&from_share=1'
         }
+        // GA打点统计"视频分类统计"
+        if (window.ga) {
+          window.ga('send', 'event', 'video_share', 'click', 'share_ ' + type + ' _ ' + this.videoInfoParams.classify + ' _ ' + this.videoInfoParams.classifyTxt + ' _ ' + this.videoInfoParams.id)
+        }
         window.open(toUrl)
       }
     }

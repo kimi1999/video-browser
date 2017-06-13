@@ -11,7 +11,7 @@ module.exports = {
     video_detail: path.resolve(__dirname, '../dist/video_detail.html'),
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: '',
+    assetsPublicPath: '/',
     productionSourceMap: false,
     //assetsPublicPath: '/',
     //productionSourceMap: true,

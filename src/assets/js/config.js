@@ -226,7 +226,7 @@ const F = {
 let URI = {
   clientInfo: '',
   // toDetailPage: 'http://test.fe.apuscn.com/zhangxiaofeng/video-browser/video_detail.html', // 跳转到视频详情页的地址
-  toPageBase: 'http://127.0.0.1:8081/',
+  toPageBase: 'http://127.0.0.1:8081',
   toDetailPage: '/video_detail.html', // 跳转到视频详情页的地址
   toListPage: '/video_list.html',
   base: 'http://qatest.news.apusapps.com', // 后台接口 base路径
@@ -244,10 +244,10 @@ if (env.test) {
 }
 // 线上环境
 if (env.product) {
-  URI.base = ''
-  URI.toPageBase = 'test.fe.apuscn.com/zhangxiaofeng/video-browser'
-  URI.toListPage = ''
-  URI.toDetailPage = ''
+  URI.base = 'http://qatest.news.apusapps.com'
+  URI.toPageBase = 'http://qatest.news.apusapps.com'
+  URI.toListPage = '/video_list'
+  URI.toDetailPage = '/video_list'
 }
 
 export default {

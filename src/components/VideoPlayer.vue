@@ -42,6 +42,7 @@
     props: ['player-cont-params'],
     data () {
       return {
+        player: null,
         videoCover: '',
         videoIsReady: false
       }
@@ -69,7 +70,7 @@
           try {
             if (YT && YT.Player) {
               clearInterval(timer)
-              const player = new YT.Player('APUSVideoPlayer', {
+              self.player = new YT.Player('APUSVideoPlayer', {
                 height: '100%',
                 width: '100%',
                 videoId: self.playerContParams.video.source_url,
@@ -106,8 +107,47 @@
         this.videoIsReady = true
         document.getElementById('APUSVideoPlayer').style.display = 'block'
       },
-      onPlayerStateChange () {
-
+      onPlayerStateChange (event) {
+        const self = this
+        let gaAction = ''
+        let second = ''
+        switch (event.data) {
+          case YT.PlayerState.UNSTARTED:
+            break
+          case YT.PlayerState.ENDED:
+            gaAction = 'watch_to_end'
+            break
+          case YT.PlayerState.PLAYING:
+            gaAction = 'play'
+            second = self.player.getCurrentTime()
+            var timerId = setInterval(function () {
+              if (self.player && self.player.getCurrentTime()) {
+                const currentTime = self.player.getCurrentTime()
+                const percent = parseInt(currentTime * 100 / parseInt(self.playerContParams.video.duration)) + ''
+                // GA打点统计"视频分类统计"
+                if (window.ga && /^(25)|(50)|(75)|(90)$/.test(percent)) {
+                  window.ga('send', 'event', 'video_watch', 'View', 'video_ ' + self.playerContParams.video.id + ' _percent_' + percent)
+                }
+              }
+            }, 100)
+            break
+          case YT.PlayerState.PAUSED:
+            gaAction = 'paused'
+            second = self.player.getCurrentTime()
+            break
+          case YT.PlayerState.BUFFERING:
+            break
+          case YT.PlayerState.CUED:
+            break
+        }
+        let gaLabel = 'video_ ' + this.playerContParams.video.id + '_' + gaAction
+        if (gaAction === 'paused') {
+          gaLabel += '_' + second
+        }
+        // GA打点统计"视频分类统计"
+        if (window.ga && gaAction) {
+          window.ga('send', 'event', 'video_detail', gaAction, gaLabel)
+        }
       },
       onPlayerPlaybackQualityChange () {
 

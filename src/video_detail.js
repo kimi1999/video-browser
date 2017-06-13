@@ -23,7 +23,7 @@ Vue.http.interceptors.push((request, next) => {
     'newsCountry': 'IN'
   }
   var browserLanguage = navigator.language || ''
-  if (!browserLanguage) {
+  if (browserLanguage && Config.env.product) {
     var arr = browserLanguage.split('-')
     if (arr[0]) {
       postData.lang = arr[0]
