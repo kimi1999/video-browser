@@ -21,7 +21,13 @@
       a.src = g;
       m.parentNode.insertBefore(a, m)
     })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-    ga('create', 'UA-100439499-1', 'auto'); // UA-100439499-1(APUS产品统计id)   UA-100432644-1(非APUS产品统计id)
+    // UA-100439499-1(APUS产品统计id)   UA-100432644-1(非APUS产品统计id)
+    var gaTid = 'UA-100432644-1'
+    var hrefReg = new RegExp('video.a5browser.com')
+    if (hrefReg.test(window.location.href)) {
+      gaTid = 'UA-100439499-1'
+    }
+    ga('create', gaTid, 'auto');
     ga('send', 'pageview');
   </script>
 </body>

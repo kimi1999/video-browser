@@ -1,5 +1,8 @@
 import * as types from '../mutation-types'
 const state = {
+  lang: null,
+  newsCountry: null,
+  classify: [],
   pagePosition: {},
   nextVideoListStart: {},
   showList: {}, // 显示的视频列表
@@ -32,6 +35,48 @@ const mutations = {
     if (val.classify) {
       state.pagePosition[val.classify] = pagePosition
     }
+  },
+  [types.SET_VIDEO_LANGUAGE_COUNTRY] (state, val) {
+    var browserLanguage = navigator.language || ''
+    let lang = null
+    let country = null
+    if (browserLanguage) {
+      var arr = browserLanguage.split('-')
+      if (arr[0]) {
+        lang = arr[0]
+      }
+      if (arr[1]) {
+        country = arr[1]
+      }
+    }
+    if (val.country) {
+      country = val.country
+    }
+    let findLang = null
+    if (val.cats) {
+      let langList = []
+      for (const key in val.cats) {
+        langList.push(key)
+      }
+      langList.forEach((lg) => {
+        if (lg === lang) {
+          findLang = lg
+        }
+      })
+      if (!findLang && langList[0]) {
+        findLang = langList[0]
+      }
+    }
+    lang = findLang
+    if (country) {
+      state.newsCountry = country
+    }
+    if (lang) {
+      state.lang = lang
+    }
+    if (country && lang && val.cats) {
+      state.classify = val.cats[lang]
+    }
   }
 }
 
@@ -47,6 +92,9 @@ const actions = {
   },
   saveScrollPosition ({commit}, val) {
     commit(types.SAVE_SCROLL_POSITION, val)
+  },
+  setVideoLanguageCountry ({commit}, val) {
+    commit(types.SET_VIDEO_LANGUAGE_COUNTRY, val)
   }
 }
 

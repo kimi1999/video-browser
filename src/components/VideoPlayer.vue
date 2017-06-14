@@ -120,16 +120,27 @@
           case YT.PlayerState.PLAYING:
             gaAction = 'play'
             second = self.player.getCurrentTime()
+            let regPercent = 25
             var timerId = setInterval(function () {
               if (self.player && self.player.getCurrentTime()) {
                 const currentTime = self.player.getCurrentTime()
                 const percent = parseInt(currentTime * 100 / parseInt(self.playerContParams.video.duration)) + ''
                 // GA打点统计"视频分类统计"
-                if (window.ga && /^(25)|(50)|(75)|(90)$/.test(percent)) {
-                  window.ga('send', 'event', 'video_watch', 'View', 'video_ ' + self.playerContParams.video.id + ' _percent_' + percent)
+                const myReg = new RegExp(regPercent)
+                if (window.ga && myReg.test(percent)) {
+                  if (regPercent < 75) {
+                    regPercent += 25
+                  } else {
+                    regPercent += 15
+                  }
+                  window.ga('send', 'event', 'video_watch', 'View', 'video_' + self.playerContParams.video.id + '_percent_' + percent)
+                }
+                const lTime = self.playerContParams.video.duration - self.player.getCurrentTime()
+                if (lTime < 3) {
+                  clearInterval(timerId)
                 }
               }
-            }, 100)
+            }, 300)
             break
           case YT.PlayerState.PAUSED:
             gaAction = 'paused'
@@ -140,8 +151,8 @@
           case YT.PlayerState.CUED:
             break
         }
-        let gaLabel = 'video_ ' + this.playerContParams.video.id + '_' + gaAction
-        if (gaAction === 'paused') {
+        let gaLabel = 'video_' + this.playerContParams.video.id + '_' + gaAction
+        if (gaAction === 'paused' || gaAction === 'play') {
           gaLabel += '_' + second
         }
         // GA打点统计"视频分类统计"

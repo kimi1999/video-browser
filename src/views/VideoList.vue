@@ -22,9 +22,9 @@
   }
 </style>
 
-<script>
-
+<script lang="babel">
   import Config from '../assets/js/config'
+  import {mapGetters} from 'vuex'
   import SlideTabs from '../components/SlideTabs.vue'
   import LoadingCenter from '../components/LoadingCenter.vue'
   import ListMain from '../components/ListMain.vue'
@@ -46,6 +46,11 @@
         nowPageClassify: null
       }
     },
+    computed: {
+      ...mapGetters({
+        video_list: 'video_list'
+      })
+    },
     mounted () {
       // console.log("在APUS浏览器内： "+Config.env.inApusBrowser);
       // console.log("clientInfo： "+Config.URI.clientInfos);
@@ -65,24 +70,35 @@
         let ajaxUrl = Config.URI.base + Config.URI.getVideoCats
         this.$http.post(ajaxUrl, {}).then(({data}) => {
           if (data.code === 0 && data.data) {
-            this.tabs.list = data.data.cats || []
-            if (!this.tabs.list[0]) {
-              window.location.href = Config.URI.toPageBase + '/error.html'
+            let toStoreData = {
+              country: data.data.country,
+              cats: data.data.cats
             }
-            let nowPageClassify = this.tabs.list[0]
-            if ('video_classify' in urlParams) {
-              this.tabs.list.forEach((_classify) => {
-                if (_classify.id === parseInt(urlParams['video_classify'])) {
-                  nowPageClassify = _classify
-                }
-              })
-            }
-            // GA打点统计"视频分类统计"
-            if (window.ga) {
-              window.ga('send', 'event', 'category_list', 'click', 'video_classify_' + nowPageClassify.id + '_' + nowPageClassify.text)
-            }
-            this.nowPageClassify = nowPageClassify
-            this.triggerChangTab(nowPageClassify)
+            this.$store.dispatch('setVideoLanguageCountry', toStoreData)
+            this.$nextTick(() => {
+              if (!this.video_list.newsCountry && !this.video_list.lang) {
+                // window.location.href = Config.URI.toPageBase + '/error.html'
+                return
+              }
+              this.tabs.list = data.data.cats[this.video_list.lang]
+              if (!this.tabs.list[0]) {
+//              window.location.href = Config.URI.toPageBase + '/error.html'
+              }
+              let nowPageClassify = this.tabs.list[0]
+              if ('video_classify' in urlParams) {
+                this.tabs.list.forEach((_classify) => {
+                  if (_classify.id === parseInt(urlParams['video_classify'])) {
+                    nowPageClassify = _classify
+                  }
+                })
+              }
+              // GA打点统计"视频分类统计"
+              if (window.ga) {
+                window.ga('send', 'event', 'category_list', 'click', 'video_classify_' + nowPageClassify.id + '_' + nowPageClassify.text)
+              }
+              this.nowPageClassify = nowPageClassify
+              this.triggerChangTab(nowPageClassify)
+            })
           }
         })
       },

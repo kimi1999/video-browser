@@ -15,21 +15,16 @@ Vue.http.interceptors.push((request, next) => {
   if (request.method === 'GET') {
     s = 'params'
   }
+  console.log(store.state.video_list)
   let postData = {
-    'lang': 'en',
     'moduleId': 1,
-    'productId': 7,
-    'newsCountry': 'IN'
+    'productId': 7
   }
-  var browserLanguage = navigator.language || ''
-  if (browserLanguage  && Config.env.product) {
-    var arr = browserLanguage.split('-')
-    if (arr[0]) {
-      postData.lang = arr[0]
-    }
-    if (arr[1]) {
-      postData.newsCountry = arr[1]
-    }
+  if (store.state.video_list && store.state.video_list.lang) {
+    postData.lang = store.state.video_list.lang
+  }
+  if (store.state.video_list && store.state.video_list.newsCountry) {
+    postData.newsCountry = store.state.video_list.newsCountry
   }
   for (var key in postData) {
     request[s][key] = postData[key]

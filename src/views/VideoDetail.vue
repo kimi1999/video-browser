@@ -1,4 +1,3 @@
-<script src="../../../../commonUse/useful/publicTools.js"></script>
 <template>
   <div class="detail-main" :style="{paddingTop:playerContParams.relHeight+'px'}">
     <VideoPlayer v-if="playerContParams.video && videoInfoParams.id" :player-cont-params="playerContParams"></VideoPlayer>
@@ -17,6 +16,7 @@
 
 <script>
   import Config from '../assets/js/config'
+  import {mapGetters} from 'vuex'
   import VideoPlayer from '../components/VideoPlayer.vue'
   import VideoInfo from '../components/VideoInfo.vue'
   import PartingLine from '../components/PartingLine.vue'
@@ -50,6 +50,11 @@
         classifyList: []
       }
     },
+    computed: {
+      ...mapGetters({
+        video_list: 'video_list'
+      })
+    },
     mounted () {
       this.getVideoClassifies()
       this.setPlayerHeight()
@@ -61,13 +66,26 @@
         let ajaxUrl = Config.URI.base + Config.URI.getVideoCats
         this.$http.post(ajaxUrl, {}).then(({data}) => {
           if (data.code === 0 && data.data) {
-            const classifyList = data.data.cats || []
-            if (!classifyList[0]) {
-              window.location.href = Config.URI.toPageBase + '/error.html'
-            } else {
-              this.classifyList = classifyList
-              this.getVideoDetail()
+            let toStoreData = {
+              country: data.data.country,
+              cats: data.data.cats
             }
+            this.$store.dispatch('setVideoLanguageCountry', toStoreData)
+            this.$nextTick(() => {
+              if (!this.video_list.newsCountry && !this.video_list.lang) {
+                // window.location.href = Config.URI.toPageBase + '/error.html'
+                return
+              }
+              const classifyList = data.data.cats[this.video_list.lang] || []
+              if (!classifyList[0]) {
+                // window.location.href = Config.URI.toPageBase + '/error.html'
+              } else {
+                this.classifyList = classifyList
+                this.getVideoDetail()
+              }
+            })
+          } else {
+            // window.location.href = Config.URI.toPageBase + '/error.html'
           }
         })
       },
@@ -105,14 +123,14 @@
                 this.videoInfoParams.source = nowVideo.source
                 this.playerContParams.video = nowVideo
               } else {
-                window.location.href = '/error.html'
+//                window.location.href = '/error.html'
               }
             })
           } else {
-            window.location.href = '/error.html'
+//            window.location.href = '/error.html'
           }
         } else {
-          window.location.href = '/error.html'
+//          window.location.href = '/error.html'
         }
       },
       // 设置 视频播放区域高度

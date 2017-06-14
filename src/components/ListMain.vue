@@ -212,7 +212,9 @@
           this.$store.dispatch('setVideoSourceList', storeParams1)
         }
         // 无论成功失败 都会执行的操作
-        this.$emit('getVideoListSuccess')
+        if (this.video_list.showList[this.nowClassify]) {
+          this.$emit('getVideoListSuccess')
+        }
         setTimeout(function () {
           self.tools.loadingMoreSuccess = true
           self.tools.loadingMore = false

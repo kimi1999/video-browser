@@ -86,13 +86,20 @@
       return {}
     },
     mounted () {
-      let nowClassify = this.nowPageClassify
-      Ps.initialize(document.getElementById('scrollTab'))// 初始化 滚动分类
-      let offsetLeft = $('[tab-id=' + nowClassify.id + ']').offset().left
-      if (offsetLeft > 40) {
-        offsetLeft -= 40
-      }
-      $('#scrollTab').scrollLeft(offsetLeft)
+      // 初始化可滑动视频分类
+      var timer = setInterval(() => {
+        if ($('#scrollTab')[0]) {
+          console.log('00000000000')
+          clearInterval(timer)
+          let nowClassify = this.nowPageClassify
+          Ps.initialize(document.getElementById('scrollTab'))// 初始化 滚动分类
+          let offsetLeft = $('[tab-id=' + nowClassify.id + ']').offset().left
+          if (offsetLeft > 40) {
+            offsetLeft -= 40
+          }
+          $('#scrollTab').scrollLeft(offsetLeft)
+        }
+      }, 50)
     },
     methods: {
       checkTab (tab) {

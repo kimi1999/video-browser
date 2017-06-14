@@ -1,9 +1,9 @@
 /* eslint-disable no-redeclare,camelcase,no-useless-escape */
 
 const env = {
-  dev: true,
-  test: false,
-  product: false,
+  dev: true, // 开发环境
+  test: false, // 测试环境
+  product: false, // 正式环境
   lang: 'en',
   inApusBrowser: window.WebstoreInterface
 }
@@ -243,11 +243,11 @@ if (env.test) {
   // URI.toDetailPage = ''
 }
 // 线上环境
-if (env.product) {
+if (env.product) { // http://qatest.news.apusapps.com/v/list
   URI.base = 'http://qatest.news.apusapps.com'
   URI.toPageBase = 'http://qatest.news.apusapps.com'
-  URI.toListPage = '/video_list'
-  URI.toDetailPage = '/video_list'
+  URI.toListPage = '/v/list'
+  URI.toDetailPage = '/v/detail'
 }
 
 export default {
