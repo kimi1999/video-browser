@@ -1,9 +1,9 @@
 /* eslint-disable no-redeclare,camelcase,no-useless-escape */
 
 const env = {
-  dev: true, // 开发环境
+  dev: false, // 开发环境
   test: false, // 测试环境
-  product: false, // 正式环境
+  product: true, // 正式环境
   lang: 'en',
   inApusBrowser: window.WebstoreInterface
 }

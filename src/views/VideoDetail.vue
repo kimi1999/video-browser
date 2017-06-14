@@ -91,6 +91,7 @@
       },
       // 获取视频详情
       getVideoDetail () {
+        const self = this
         const topUrl = window.location.href
         const urlParams = Config.F.urlParamToObj(topUrl)
         if ('id' in urlParams) {
@@ -99,33 +100,40 @@
             let postData = {
               id: parseInt(urlParams['id'])
             }
-            this.$http.post(ajaxUrl, postData).then(({data}) => {
-              if (data.code === 0 && data.data) {
-                const nowVideo = data.data
-                // 获取相关视频
-                let classify = 1
-                if (nowVideo.categories && nowVideo.categories[0]) {
-                  classify = nowVideo.categories[0]
-                }
-                let classifyTxt = 1
-                this.classifyList.forEach((cl) => {
-                  if (cl.id === classify) {
-                    classifyTxt = cl.text
-                  }
-                })
-                this.videoListParams.classify = classify
-                this.videoListParams.classifyTxt = classifyTxt
-                // 渲染当前视频
-                this.videoInfoParams.id = parseInt(urlParams['id'])
-                this.videoInfoParams.classify = classify
-                this.videoInfoParams.classifyTxt = classifyTxt
-                this.videoInfoParams.title = nowVideo.article_title
-                this.videoInfoParams.source = nowVideo.source
-                this.playerContParams.video = nowVideo
-              } else {
-//                window.location.href = '/error.html'
+            const setVideoDetail = function (nowVideo) {
+              // 获取相关视频
+              let classify = 1
+              if (nowVideo.categories && nowVideo.categories[0]) {
+                classify = nowVideo.categories[0]
               }
-            })
+              let classifyTxt = 1
+              self.classifyList.forEach((cl) => {
+                if (cl.id === classify) {
+                  classifyTxt = cl.text
+                }
+              })
+              self.videoListParams.classify = classify
+              self.videoListParams.classifyTxt = classifyTxt
+              // 渲染当前视频
+              self.videoInfoParams.id = parseInt(urlParams['id'])
+              self.videoInfoParams.classify = classify
+              self.videoInfoParams.classifyTxt = classifyTxt
+              self.videoInfoParams.title = nowVideo.article_title
+              self.videoInfoParams.source = nowVideo.source
+              self.playerContParams.video = nowVideo
+            }
+            // 正式环境直接获取php写入页面的视频详情变量
+            if (Config.env.product && window.detail) {
+              setVideoDetail(window.detail)
+            } else {
+              this.$http.post(ajaxUrl, postData).then(({data}) => {
+                if (data.code === 0 && data.data) {
+                  setVideoDetail(data.data)
+                } else {
+//                window.location.href = '/error.html'
+                }
+              })
+            }
           } else {
 //            window.location.href = '/error.html'
           }
