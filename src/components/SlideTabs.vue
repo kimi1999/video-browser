@@ -89,7 +89,6 @@
       // 初始化可滑动视频分类
       var timer = setInterval(() => {
         if ($('#scrollTab')[0]) {
-          console.log('00000000000')
           clearInterval(timer)
           let nowClassify = this.nowPageClassify
           Ps.initialize(document.getElementById('scrollTab'))// 初始化 滚动分类

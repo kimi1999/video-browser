@@ -8,12 +8,13 @@ var CopyWebpackPlugin = require('copy-webpack-plugin')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
+require('babel-polyfill')
 
 var env = config.build.env
 
 var webpackConfig = merge(baseWebpackConfig, {
   entry:{
-    video_detail: ['./src/video_detail.js']
+    video_detail: ['babel-polyfill', './src/video_detail.js']
   },
   module: {
     rules: utils.styleLoaders({

@@ -1,6 +1,6 @@
 /* eslint-disable no-new */
 import Vue from 'vue'
-import Config from './assets/js/config'
+import 'babel-polyfill'
 import VueResource from 'vue-resource'
 Vue.use(VueResource)
 import store from './store/index'
@@ -15,7 +15,6 @@ Vue.http.interceptors.push((request, next) => {
   if (request.method === 'GET') {
     s = 'params'
   }
-  console.log(store.state.video_list)
   let postData = {
     'moduleId': 1,
     'productId': 7

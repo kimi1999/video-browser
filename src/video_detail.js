@@ -1,11 +1,10 @@
 /* eslint-disable no-new */
 import Vue from 'vue'
-import Config from './assets/js/config'
+import 'babel-polyfill'
 import VueResource from 'vue-resource'
 Vue.use(VueResource)
 import store from './store/index'
 import VideoDetail from './views/VideoDetail.vue'
-
 
 Vue.http.interceptors.push((request, next) => {
   // request.credentials = true;
