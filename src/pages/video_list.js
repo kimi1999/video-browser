@@ -1,10 +1,10 @@
 /* eslint-disable no-new */
 import Vue from 'vue'
-import 'babel-polyfill'
+// import 'babel-polyfill'
 import VueResource from 'vue-resource'
 Vue.use(VueResource)
-import store from './store/index'
-import VideoList from './views/VideoList.vue'
+import store from '../store/index'
+import VideoList from '../views/VideoList.vue'
 
 Vue.http.interceptors.push((request, next) => {
   // request.credentials = true;
@@ -49,6 +49,7 @@ Vue.http.interceptors.push((request, next) => {
 new Vue({
   el: '#listApp',
   store,
-  template: '<VideoList />',
-  components: {VideoList}
+  render: function (h) {
+    return h(VideoList)
+  }
 })

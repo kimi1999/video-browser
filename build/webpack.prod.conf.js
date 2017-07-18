@@ -12,9 +12,6 @@ var OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 var env = config.build.env
 
 var webpackConfig = merge(baseWebpackConfig, {
-  entry:{
-    index: ['./src/app.js']
-  },
   module: {
     rules: utils.styleLoaders({
       sourceMap: config.build.productionSourceMap,
@@ -52,6 +49,7 @@ var webpackConfig = merge(baseWebpackConfig, {
     // generate dist index.html with correct asset hash for caching.
     // you can customize output by editing /index.html
     // see https://github.com/ampedandwired/html-webpack-plugin
+    /*
     new HtmlWebpackPlugin({
       filename: config.build.index,
       template: 'pages/index.html',
@@ -67,6 +65,7 @@ var webpackConfig = merge(baseWebpackConfig, {
       // necessary to consistently work with multiple chunks via CommonsChunkPlugin
       chunksSortMode: 'dependency'
     }),
+    */
     // split vendor js into its own file
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
@@ -97,7 +96,20 @@ var webpackConfig = merge(baseWebpackConfig, {
     ])
   ]
 })
-
+var chunks = Object.keys(baseWebpackConfig.entry);
+chunks.forEach(function (pathname) {
+  if (pathname === 'vendor') {
+    return;
+  }
+  var conf = {
+    filename: pathname + '.html',
+    template: 'src/pages/' + pathname + '.html',
+    inject: true
+  };
+  conf.chunks = ['vendor', pathname, 'manifest'];
+  conf.hash = false;
+  webpackConfig.plugins.push(new HtmlWebpackPlugin(conf));
+});
 if (config.build.productionGzip) {
   var CompressionWebpackPlugin = require('compression-webpack-plugin')
 

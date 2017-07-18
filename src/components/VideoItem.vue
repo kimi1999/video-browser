@@ -82,7 +82,6 @@
 </style>
 <script>
   import Config from '../assets/js/config'
-  import $ from 'jquery'
   import LoadingCenter from './LoadingCenter.vue'
   export default{
     props: ['video-data'],
@@ -108,7 +107,7 @@
       resetVideoBoxHeight () {
         const self = this
         const timer = setInterval(function () {
-          let coverWidth = $('.video-item').width()
+          let coverWidth = self.$el.clientWidth
           if (coverWidth) {
             clearInterval(timer)
             self.$set(self.videoBox, 'relHeight', (coverWidth * self.videoBox.height / self.videoBox.width) + 'px')

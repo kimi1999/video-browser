@@ -4,14 +4,9 @@ var path = require('path')
 module.exports = {
   build: {
     env: require('./prod.env'),
-    //pages:["index","video_list","video_detail"],
-    pages:["video_list","video_detail"],//需要构建的页面列表
-    index: path.resolve(__dirname, '../dist/index.html'),
-    video_list: path.resolve(__dirname, '../dist/video_list.html'),
-    video_detail: path.resolve(__dirname, '../dist/video_detail.html'),
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: '',
+    assetsPublicPath: '/',
     productionSourceMap: false,
     //assetsPublicPath: '/',
     //productionSourceMap: true,

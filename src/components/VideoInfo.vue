@@ -16,7 +16,7 @@
   </div>
 </template>
 
-<style lang="less" scoped>
+<style lang="less" type="text/less" scoped>
   .info-main{
     box-sizing: border-box;
     width: 100%;
@@ -27,8 +27,10 @@
       font-size: 16px;
       color: #444444;
       line-height:24px;
-      word-wrap: normal;
-      word-break: keep-all;
+      /*word-wrap: normal;*/
+      /*word-break: keep-all;*/
+      word-wrap:break-word;/*支持IE，chrome，FF*/
+      word-break:break-all; /*支持IE，chrome，FF不支持*/
     }
     .share-cont{
       margin-top: 10px;
@@ -86,15 +88,16 @@
             toUrl = 'http://m.facebook.com/sharer?u='
             break
           case 'more':
-            toUrl = 'tercel://moreshare'
+            toUrl = 'tercel://moreshare?url='
             break
           default:
             break
         }
-        toUrl += window.location.href
+        let href = window.location.href
         if (!('from_share' in urlParams)) {
-          toUrl += '&from_share=1'
+          href += '&from_share=1'
         }
+        toUrl += encodeURIComponent(href)
         // GA打点统计"视频分类统计"
         if (window.ga) {
           window.ga('send', 'event', 'video_share', 'click', 'share_ ' + type + ' _ ' + this.videoInfoParams.classify + ' _ ' + this.videoInfoParams.classifyTxt + ' _ ' + this.videoInfoParams.id)

@@ -1,9 +1,9 @@
 /* eslint-disable no-redeclare,camelcase,no-useless-escape */
 
 const env = {
-  dev: false, // 开发环境
-  test: false, // 测试环境
-  product: true, // 正式环境
+  dev: 1, // 开发环境
+  test: 0, // 测试环境
+  product: 0, // 正式环境
   lang: 'en',
   inApusBrowser: window.WebstoreInterface
 }
@@ -219,6 +219,33 @@ const F = {
       }
     }
     return reTimeStr
+  },
+  // 通过class名选择元素
+  getElementsByClass (sClass, el) {
+    var aResult = []
+    var region = el ? el : document
+    var aEle = region.all ? region.all : region.getElementsByTagName('*')
+    for (var i = 0; i < aEle.length; i++) {
+      if (aEle[i].className && (typeof aEle[i].className) === 'string') {
+        var classList = aEle[i].className.split(' ')
+        for (var j = 0; j < classList.length; j++) {
+          if (classList[j] === sClass) {
+            aResult.push(aEle[i])
+          }
+        }
+      }
+    }
+    return aResult
+  },
+  /* 原生js 获取node节点前面的兄弟节点  */
+  getPreviousSibling (node) {
+    let siblings = []
+    let dealNode = node
+    while (dealNode && dealNode.previousSibling) {
+      siblings.push(dealNode.previousSibling)
+      dealNode = dealNode.previousSibling
+    }
+    return siblings
   }
 
 }
@@ -244,8 +271,8 @@ if (env.test) {
 }
 // 线上环境
 if (env.product) { // http://qatest.news.apusapps.com/v/list
-  URI.base = 'http://qatest.news.apusapps.com'
-  URI.toPageBase = 'http://qatest.news.apusapps.com'
+  URI.base = window.location.origin
+  URI.toPageBase = window.location.origin
   URI.toListPage = '/v/list'
   URI.toDetailPage = '/v/detail'
 }

@@ -2,17 +2,17 @@ var path = require('path')
 var utils = require('./utils')
 var config = require('../config')
 var vueLoaderConfig = require('./vue-loader.conf')
+var glob = require('glob')
 
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
-
+const entry = {}
+glob.sync('./src/pages/*.js').forEach(val => {
+  entry[path.basename(val, '.js')] = val
+})
 module.exports = {
-  // entry: {
-  //   app: './src/app.js',
-  //   video_list: './src/video_list.js',
-  //   video_detail: './src/video_detail.js'
-  // },
+  entry,
   output: {
     path: config.build.assetsRoot,
     filename: '[name].js',
@@ -23,7 +23,7 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.vue', '.json'],
     alias: {
-      'vue$': 'vue/dist/vue.esm.js',
+      // 'vue$': 'vue/dist/vue.esm.js',
       '@': resolve('src')
     }
   },

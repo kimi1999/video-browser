@@ -4,7 +4,7 @@
       <i></i>
       <div class="tab-list" id="scrollTab">
         <p>
-          <span v-for="tab in tabs.list" @click="checkTab(tab)" :tab-id="tab.id" :key="tab.id"  :class="{on:tab.id==tabs.recent}">
+          <span class="video-classify-item" v-for="tab in tabs.list" @click="checkTab(tab)" :tab-id="tab.id" :key="tab.id"  :class="{on:tab.id==tabs.recent}">
             {{tab.text}}
           </span>
         </p>
@@ -13,7 +13,7 @@
 
   </div>
 </template>
-<style lang="less" scoped>
+<style lang="less" type="text/less" scoped>
   .box{
     font-family: Roboto-Regular;
     position: fixed;
@@ -76,7 +76,6 @@
   }
 </style>
 <script>
-  import $ from 'jquery'
   import Config from '../assets/js/config'
   require('perfect-scrollbar/dist/css/perfect-scrollbar.css')
   import Ps from 'perfect-scrollbar'
@@ -88,23 +87,37 @@
     mounted () {
       // 初始化可滑动视频分类
       var timer = setInterval(() => {
-        if ($('#scrollTab')[0]) {
+        if (document.getElementById('scrollTab')) {
           clearInterval(timer)
           let nowClassify = this.nowPageClassify
           Ps.initialize(document.getElementById('scrollTab'))// 初始化 滚动分类
-          let offsetLeft = $('[tab-id=' + nowClassify.id + ']').offset().left
-          if (offsetLeft > 40) {
-            offsetLeft -= 40
+          const videoClassifyItems = Config.F.getElementsByClass('video-classify-item', self.$el)
+          if (videoClassifyItems[0]) {
+            videoClassifyItems.forEach((classifyItem) => {
+              if (classifyItem.getAttribute('tab-id') === nowClassify.id + '') {
+                const prevSibling = Config.F.getPreviousSibling(classifyItem)
+                let offsetLeft = 42
+                if (prevSibling[0]) {
+                  prevSibling.forEach((htmlNode) => {
+                    offsetLeft += htmlNode.clientWidth
+                  })
+                }
+                if (offsetLeft > 40) {
+                  offsetLeft -= 42
+                }
+                document.getElementById('scrollTab').scrollLeft = offsetLeft
+              }
+            })
           }
-          $('#scrollTab').scrollLeft(offsetLeft)
         }
       }, 50)
     },
     methods: {
       checkTab (tab) {
-        $('.ps-container.ps-active-x  .ps-scrollbar-x-rail').css({
-          'opacity': 0
-        })
+        const scrollbarXRails = Config.F.getElementsByClass('ps-scrollbar-x-rail', this.$el)
+        if (scrollbarXRails[0]) {
+          scrollbarXRails[0].style.opacity = 0
+        }
         window.location.href = Config.URI.toPageBase + Config.URI.toListPage + '?video_classify=' + tab.id
         // this.$emit('changTab', tab)
       }
